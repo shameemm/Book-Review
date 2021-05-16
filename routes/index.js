@@ -16,10 +16,13 @@ router.post("/signIn", (req, res) => {
     .doLogin(req.body)
     .then((userData) => {
       console.log("user ready");
+      res.send("first stage complete")
     })
     .catch((err) => {
+      res.redirect('/')
       if (err) {
         console.log("pass err");
+        
       } else {
         console.log("nno user");
       }
@@ -31,10 +34,11 @@ router.post("/signUp", (req, res) => {
   userLogger
     .doSignUp(req.body)
     .then(() => {
-      console.log("ok");
+      res.send("first stage complete")
     })
     .catch(() => {
-      console.log("fail");
+      console.log("signup fail");
+      res.redirect('/signUpPage')
     });
 });
 module.exports = router;

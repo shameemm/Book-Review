@@ -33,11 +33,9 @@ module.exports = {
       if (user) {
         await bcrypt
           .compare(userData.password, user.password)
-          .then(() => {
-            resolve(user);
-          })
-          .catch(() => {
-            reject();
+          .then((status) => {
+            if (status) resolve(user);
+            else reject(true);
           });
       } else {
         reject();

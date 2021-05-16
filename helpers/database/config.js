@@ -5,7 +5,7 @@ module.exports = {
       mongoose.connect(
         "mongodb+srv://mubaris:3887@cluster0.lgafj.mongodb.net/book-review?retryWrites=true&w=majority",
         () => {
-          console.log("db is ok");
+          console.log("database connected successfully");
         }
       );
     });
