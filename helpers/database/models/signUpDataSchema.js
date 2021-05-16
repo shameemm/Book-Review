@@ -5,6 +5,10 @@ const userData=new mongoose.Schema({
         type:String,
         require:true
     },
+    mobile:{
+        type:Number,
+        require:true
+    },
     email:{
         type:String,
         require:true
@@ -16,7 +20,7 @@ const userData=new mongoose.Schema({
    
     Date:{
         type:Date,
-        default:Date.now
+        default:Date.now  
     }
-},{collection:'userData'});
-module.exports=mongoose.model('myFirstDatabase',userData)
+},{collection:'user-data'});
+module.exports=mongoose.model('book-review',userData)

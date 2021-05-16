@@ -1,48 +1,46 @@
-var bcrypt=require('bcrypt');
-var userDateSchema=require('../models/signUpDataSchema')
+var bcrypt = require("bcrypt");
+var userDataSchema = require("../models/signUpDataSchema");
+
 module.exports = {
   doSignUp: (userData) => {
     return new Promise(async (resolve, reject) => {
-      var user = await userDateSchema.findOne({ email: userData.email });
+      var user = await userDataSchema.findOne({ email: userData.email });
       if (user) {
-        reject("user mail exist");
-        console.log("mail already exist");
+        reject(user);
       } else {
         userData.password = await bcrypt.hash(userData.password, 10);
-        var data = new userDateSchema({
-          username: userData.username,
+        var data = new userDataSchema({
+          username: userData.name,
+          mobile: userData.mobile,
           email: userData.email,
           password: userData.password,
         });
         data
           .save()
           .then((data) => {
-            // console.log("success 111" + data);
             resolve(data);
           })
           .catch((err) => {
-            console.log("err 111" + err);
+            reject(err);
           });
       }
     });
   },
-  doSignin: (userData) => {
+  doLogin: (userData) => {
     return new Promise(async (resolve, reject) => {
-      var user = await userDateSchema.findOne({ email: userData.email });
+      var user = await userDataSchema.findOne({ email: userData.email });
+
       if (user) {
-        console.log("user found");
-        bcrypt.compare(userData.password, user.password).then((status) => {
-          if (status) {
+        await bcrypt
+          .compare(userData.password, user.password)
+          .then(() => {
             resolve(user);
-            console.log("correct pass");
-          } else {
-            resolve(status);
-            console.log("incorrect pass");
-          }
-        });
+          })
+          .catch(() => {
+            reject();
+          });
       } else {
-        console.log("no user found");
-        reject("no user found");
+        reject();
       }
     });
   },
