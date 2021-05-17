@@ -10,6 +10,10 @@ router.get("/", function (req, res, next) {
 router.get("/signUpPage", function (req, res, next) {
   res.render("user/signUp");
 });
+// add review render
+router.get("/add-review", function (req, res, next) {
+  res.render("user/add-review");
+});
 // validation user data from login page
 router.post("/signIn", (req, res) => {
   userLogger
