@@ -1,0 +1,54 @@
+<section>
+  <div class="pl-5 pt-5">
+    <h1> welcome {{name}} <br /> this is the home page</h1>
+    <h1> <a class="btn btn-danger" href="/addBook">to add book</a></h1>
+    <br />
+    <h1> <a class="btn btn-danger" href="/logOut">log out</a> </h1>
+
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+
+        <th scope="col">ibn</th>
+        <th scope="col">Name</th>
+        <th scope="col">author</th>
+        <th scope="col">language</th>
+        <th scope="col">description</th>
+         <th scope="col">link to purchase</th> 
+        <th scope="col">yearOfPublication</th>
+        <th scope="col">genre</th>
+        <th scope="col">image</th>
+        <th>delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each books}}
+        {{#each this}}
+        {{#if this.ibnNumber}}
+          <tr>
+
+            <td>{{this.ibnNumber}}</td>
+            <td>{{this.bookName}}</td>
+            <td>{{this.authorName}}</td>
+            <td>{{this.language}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.purchaseLink}}</td>
+            <td>{{this.yearOfPublication}}</td>
+            <td>{{this.Genre}}</td>
+            <td><img
+                src="/cover-images/{{this._id}}.jpg"
+                alt="err"
+                srcset=""
+                style="height: 100px;width:100px"
+              /></td>
+              <td><a href="/deleteBook/{{this._id}}" class="btn btn-danger">delete</a></td>
+
+          </tr>
+          {{/if}}
+        {{/each}}
+      {{/each}}
+
+    </tbody>
+  </table>
+</section>

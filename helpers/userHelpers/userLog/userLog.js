@@ -1,5 +1,5 @@
 var bcrypt = require("bcrypt");
-var userDataSchema = require("../models/signUpDataSchema");
+var userDataSchema = require("../../database/models/signUpDataSchema");
 
 module.exports = {
   doSignUp: (userData) => {
@@ -26,16 +26,21 @@ module.exports = {
       }
     });
   },
-  doLogin: (userData) => {
+  doLogin: (userLoginData) => {
     return new Promise(async (resolve, reject) => {
-      var user = await userDataSchema.findOne({ email: userData.email });
+      var userData = await userDataSchema.findOne({ email: userLoginData.email });
 
-      if (user) {
+      if (userData) {
         await bcrypt
-          .compare(userData.password, user.password)
+          .compare(userLoginData.password, userData.password)
           .then((status) => {
-            if (status) resolve(user);
-            else reject(true);
+            if (status) {
+              console.log("true 2222");
+              resolve(userData);
+            } else {
+              reject(true);
+              console.log("false");
+            }
           });
       } else {
         reject();
