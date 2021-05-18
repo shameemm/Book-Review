@@ -19,6 +19,13 @@ const comments = new mongoose.Schema(
           type: Number,
           require: true,
         },
+        userVerification: {
+          type: Boolean,
+        },
+        book_Id: {
+          type: mongoose.Types.ObjectId,
+          require: true,
+        },
         Date: {
           type: Date,
           default: Date.now,

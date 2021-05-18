@@ -32,14 +32,33 @@
         {{/if}}
       {{/each}}
     </div>
-    <div class="col"> 
-        <h3>comments</h3>
-        <hr>
+    <div class="col">
+      <h3>comments</h3>
+      <hr />
       {{#each review}}
         {{#each this}}
           {{#if this.comment}}
-            <p>{{this.comment}}</p>
-             <p>rating:{{this.rate}}</p>
+            <div class="row">
+              <div class="col"><p>{{this.comment}}</p></div>
+              <div class="col"> <p>rating:{{this.rate}}</p></div>
+              {{#if this.userVerification}}
+                <div class="col" ><button
+                onclick="editComment('{{this._id}}','{{this.book_Id}}')"
+                    {{!-- href="/deleteComment/{{this._id}}/bookId/{{this.book_Id}}" --}}
+                    class="btn btn-danger"
+                    
+                  >etit commment</button>
+                </div>
+                <div class="col"><button
+                onclick="deleteComment('{{this._id}}','{{this.book_Id}}')"
+                    {{!-- href="/deleteComment/{{this._id}}/bookId/{{this.book_Id}}" --}}
+                    class="btn btn-danger"
+                    
+                  >delete commment</button>
+                </div>
+              {{/if}}
+            </div>
+
           {{/if}}
         {{/each}}
       {{/each}}
@@ -47,3 +66,34 @@
   </div>
 
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  var deleteComment=(comId,bookId)=>{
+ 
+    $.ajax({
+       url:"/deleteComment",
+      method:'post',
+     
+      data:{
+        commentId:comId,
+        bookId:bookId
+    
+        },
+      success:()=>{location.reload() }
+    })
+  }
+  var editComment=(comId,bookId)=>{
+ 
+    $.ajax({
+       url:"/editComment",
+      method:'post',
+     
+      data:{
+        commentId:comId,
+        bookId:bookId
+    
+        }
+     
+    })
+  }
+</script>

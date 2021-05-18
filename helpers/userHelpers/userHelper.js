@@ -48,17 +48,19 @@ module.exports = {
           fse
             .remove("./public/cover-images/" + bookId + ".jpg")
             .then(() => {
-              commentDataSchema.findOneAndDelete({bookId:bookId}).then(()=>{
-                resolve();
-                // console.log("!@#$")
-              }).catch((err)=>{
-                reject()
-              })
-            
+              commentDataSchema
+                .findOneAndDelete({ bookId: bookId })
+                .then(() => {
+                  resolve();
+                  // console.log("!@#$")
+                })
+                .catch((err) => {
+                  reject();
+                });
             })
             .catch((err) => {
               console.log(err);
-              reject()
+              reject();
             });
         })
         .catch(() => {
@@ -72,7 +74,7 @@ module.exports = {
       var comm = {
         userId: userId,
         comment: details.comment,
-        rate:details.rate
+        rate: details.rate,
       };
       var commentExist = await commentDataSchema.findOne({
         bookId: details.bookId,
@@ -87,59 +89,102 @@ module.exports = {
           )
           .then(() => {
             // console.log("!!!");
-            resolve()
+            resolve();
           })
           .catch((err) => {
-            reject()
+            reject();
             console.log(err + "@@@");
           });
-      }else{
-
-      var data = new commentDataSchema({
-        bookId: details.bookId,
-        commentData: [
-          {
-            userId: userId,
-            comment: details.comment,
-            rate:details.rate
-          },
-        ],
-      });
-      data
-        .save()
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          reject();
-          console.log(err);
+      } else {
+        var data = new commentDataSchema({
+          bookId: details.bookId,
+          commentData: [
+            {
+              userId: userId,
+              comment: details.comment,
+              rate: details.rate,
+            },
+          ],
         });
+        data
+          .save()
+          .then(() => {
+            resolve();
+          })
+          .catch((err) => {
+            reject();
+            console.log(err);
+          });
       }
     });
   },
-  getBookDetails:(bookId)=>{
-    return new Promise(async(resolve,reject)=>{
-      await bookDataSchema.findById(bookId).then((data)=>{
-        resolve(data)
-      }).catch((err)=>{
-        reject(err)
-      })
-    })
-  },
-  getBookReview:(bookId)=>{
-    return new Promise(async(resolve,reject)=>{
-      var commentExist = await commentDataSchema.findOne({
-        bookId:bookId,
-      });
-      if(commentExist){
-        commentDataSchema.find({bookId:bookId}).then((data)=>{
-          resolve(data)
-        }).catch((err)=>{
-          reject(false)
+  getBookDetails: (bookId) => {
+    return new Promise(async (resolve, reject) => {
+      await bookDataSchema
+        .findById(bookId)
+        .then((data) => {
+          resolve(data);
         })
-      }else{
-        resolve(false)
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+  getBookReview: (bookId) => {
+    return new Promise(async (resolve, reject) => {
+      var commentExist = await commentDataSchema.findOne({
+        bookId: bookId,
+      });
+      if (commentExist) {
+        commentDataSchema
+          .find({ bookId: bookId })
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(false);
+          });
+      } else {
+        resolve(false);
       }
+    });
+  },
+  userVerify: (fullData, userId) => {
+    return new Promise((resolve, reject) => {
+      // console.log( fullData[0].bookId);
+      var data = fullData[0].commentData;
+      for (var i = 0; i < data.length; i++) {
+        data[i].book_Id = fullData[0].bookId;
+        if (data[i].userId == userId) {
+          data[i].userVerification = true;
+        }
+      }
+      resolve(data);
+    });
+  },
+  deleteComment: (req, userId) => {
+    return new Promise(async (resolve, reject) => {
+      commentDataSchema
+        .findOneAndUpdate(
+          {
+            bookId: req.bookId,
+          },
+          {
+            $pull: { commentData: { _id: req.commentId } },
+          }
+        )
+        .then((data) => {
+          // console.log(data);
+          resolve();
+        })
+        .then((err) => {
+          reject(err);
+        });
+    });
+  },
+  editComment:(req)=>{
+    return new Promise(async(resolve,reject)=>{
+      
     })
   }
 };

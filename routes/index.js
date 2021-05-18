@@ -77,7 +77,7 @@ router.get("/home", verifyLogin, async (req, res) => {
     });
 });
 router.get("/addBook", verifyLogin, (req, res) => {
-  res.render("user/addBook");
+  res.render("user/addBook",{name: req.session.user.username});
 });
 router.post("/booksAddToDb", verifyLogin, (req, res) => {
   var image = req.files.bookImage;
@@ -111,7 +111,7 @@ router.get("/deleteBook/:id", verifyLogin, (req, res) => {
     });
 });
 router.get("/toComment/:id", verifyLogin, (req, res) => {
-  res.render("user/addComment", { bookId: req.params.id });
+  res.render("user/addComment", { bookId: req.params.id,name: req.session.user.username });
 });
 router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
   userHelpers
@@ -123,19 +123,24 @@ router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
       res.send("comment add fails");
     });
 });
-router.get("/bookField/:id",verifyLogin, (req, res) => {
+router.get("/bookField/:id", verifyLogin, (req, res) => {
   userHelper
     .getBookDetails(req.params.id)
     .then((data) => {
       userHelper
         .getBookReview(req.params.id)
         .then((comments) => {
-          if(comments){
-          res.render("user/bookView", { details: data, review: comments[0].commentData });
-          console.log(comments[0].commentData);
-          }else{
-            res.render("user/bookView", { details: data});
-          }
+          userHelper.userVerify(comments, req.session.user._id).then((com) => {
+            if (comments) {
+              res.render("user/bookView", {
+                details: data,
+                review: com,
+              });
+              // console.log(com);
+            } else {
+              res.render("user/bookView", { details: data ,name:req.session.user.name});
+            }
+          });
         })
         .catch((err) => {
           res.send("err" + err);
@@ -145,4 +150,27 @@ router.get("/bookField/:id",verifyLogin, (req, res) => {
       res.send("err" + err);
     });
 });
+router.post("/deleteComment", verifyLogin, (req, res, next) => {
+  // console.log(req.body);
+  userHelper
+    .deleteComment(req.body, req.session.user._id)
+    .then(() => {
+      res.json(true);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+router.post("/editComment",verifyLogin,(req,res,next)=>{
+  console.log(req.body);
+  res.render("user/editComment", { bookId: req.body.bookId,commentId:req.body.commentId,name: req.session.user.username });
+  // userHelper
+  //   .editComment(req.body)
+  //   .then(() => {
+  //     res.json(true);
+  //   })
+  //   .catch((err) => {
+  //     res.send(err);
+  //   });
+})
 module.exports = router;
