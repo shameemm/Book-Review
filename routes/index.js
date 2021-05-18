@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var userLogger = require("../helpers/userHelpers/userLog/userLog");
 var userHelpers = require("../helpers/userHelpers/userHelper");
+const userHelper = require("../helpers/userHelpers/userHelper");
 
 const verifyLogin = (req, res, next) => {
   if (req.session.userLogin) {
@@ -107,6 +108,41 @@ router.get("/deleteBook/:id", verifyLogin, (req, res) => {
     })
     .catch((err) => {
       res.send("some thing went wrong");
+    });
+});
+router.get("/toComment/:id", verifyLogin, (req, res) => {
+  res.render("user/addComment", { bookId: req.params.id });
+});
+router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
+  userHelpers
+    .addComment(req.body, req.session.user._id)
+    .then(() => {
+      res.redirect("/home");
+    })
+    .catch(() => {
+      res.send("comment add fails");
+    });
+});
+router.get("/bookField/:id",verifyLogin, (req, res) => {
+  userHelper
+    .getBookDetails(req.params.id)
+    .then((data) => {
+      userHelper
+        .getBookReview(req.params.id)
+        .then((comments) => {
+          if(comments){
+          res.render("user/bookView", { details: data, review: comments[0].commentData });
+          console.log(comments[0].commentData);
+          }else{
+            res.render("user/bookView", { details: data});
+          }
+        })
+        .catch((err) => {
+          res.send("err" + err);
+        });
+    })
+    .catch((err) => {
+      res.send("err" + err);
     });
 });
 module.exports = router;
