@@ -130,7 +130,7 @@ router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
   userHelpers
     .addComment(req.body, req.session.user._id)
     .then(() => {
-      res.redirect("/home");
+      res.redirect("/bookField/"+req.body.bookId);
     })
     .catch(() => {
       res.send("comment add fails");
@@ -210,4 +210,21 @@ router.get("/download/:bookId", (req, res) => {
     }
   );
 });
+router.post("/likeCount",verifyLogin,(req,res)=>{
+  // console.log(req.body)
+  userHelper.commentLiker(req.body,req.session.user._id).then(()=>{
+    res.json(true)
+  }).catch(()=>{
+
+  })
+
+})
+router.post("/bookLiker",verifyLogin,(req,res)=>{
+  console.log(req.body)
+  userHelper.bookLiker(req.body,req.session.user._id).then(()=>{
+    res.json(true)
+  }).then((err)=>{
+    res.send("err")
+  })
+})
 module.exports = router;

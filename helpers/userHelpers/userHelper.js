@@ -1,5 +1,6 @@
 var bookDataSchema = require("../database/models/bookDataModel");
 var commentDataSchema = require("../database/models/commentModel");
+// var userDataSchema = require("../database/models/signUpDataSchema");
 const fse = require("fs-extra");
 module.exports = {
   bookDataAdder: (details, userId) => {
@@ -210,6 +211,72 @@ module.exports = {
         .then((err) => {
           reject(err);
         });
+    });
+  },
+  commentLiker: (req, userId) => {
+    return new Promise(async (resolve, reject) => {
+      req.count = parseInt(req.count);
+      commentDataSchema
+        .updateOne(
+          {
+            bookId: req.bookId,
+            commentData: { $elemMatch: { _id: req.commentId } },
+          },
+          {
+            $inc: { "commentData.$.likes": req.count },
+          }
+        )
+        .then(() => {
+          console.log("!!!");
+          resolve();
+        })
+        .catch((err) => {
+          reject();
+          console.log(err + "@@@");
+        });
+    });
+  },
+  bookLiker: (req, userId) => {
+    return new Promise(async (resolve, reject) => {
+      req.count = parseInt(req.count);
+      bookDataSchema.find({
+        _id: req.bookId,
+        likedId: { $elemMatch: { user: req.commentId } },
+      }).then((data)=>{
+        console.log(data)
+      }).catch(()=>{
+        console.log("%%")
+      })
+      //   bookDataSchema
+      //     .updateOne(
+      //       {
+      //         _id: req.bookId,
+      //       },
+      //       {
+      //         $inc: { likeNumber: req.count },
+      //         $push: { likedId: { user: userId } },
+      //       }
+      //     )
+      //     .then(() => {
+      //       // bookDataSchema
+      //       //   .updateOne(
+      //       //     {
+      //       //       _id: userId,
+      //       //     },
+      //       //     {
+      //       //       $set: { bookLike: true },
+      //       //     }
+      //       //   )
+      //       //   .then(() => {
+      //       resolve();
+      //       // })
+      //       // .catch((err) => {
+      //       //   reject(err);
+      //       // });
+      //     })
+      //     .catch((err) => {
+      //       reject(err);
+      //     });
     });
   },
 };

@@ -17,7 +17,7 @@
         <th scope="col">genre</th>
         <th scope="col">image</th>
         <th scope="col">delete</th>
-        <th scope="col">comment</th>
+        {{!-- <th scope="col">comment</th> --}}
         <th scope="col">view book</th>
       </tr>
     </thead>
@@ -45,12 +45,18 @@
                   href="/deleteBook/{{this._id}}"
                   class="btn btn-danger"
                 >delete</a></td>
-              <td><a href="/toComment/{{this._id}}" class="btn btn-primary">to
-                  comment</a></td>
+              {{!-- <td><a href="/toComment/{{this._id}}" class="btn btn-primary">to
+                  comment</a></td> --}}
               <td><a
                   href="/bookField/{{this._id}}"
                   class="btn btn-primary"
                 >view</a></td>
+              
+                <td><button onclick="likeBook('{{this._id}}')">LIKE</button></td>
+
+                <td>{{this.likes}}</td>
+
+                <td><button onclick="dislikeBook('{{this._id}}')">dis LIKE</button></td>
 
             </tr>
           {{/if}}
@@ -60,3 +66,34 @@
     </tbody>
   </table>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  var likeBook=(bookId)=>{
+ 
+    $.ajax({
+       url:"/bookLiker",
+      method:'post',
+     
+      data:{
+        count:1,
+        bookId:bookId
+    
+        },
+      success:()=>{location.reload() }
+    })
+  }
+  var dislikeBook=(bookId)=>{
+ 
+    $.ajax({
+       url:"/bookLiker",
+      method:'post',
+     
+      data:{
+        count:-1,
+        bookId:bookId
+    
+        },
+      success:()=>{location.reload() }
+    })
+  }
+  </script>

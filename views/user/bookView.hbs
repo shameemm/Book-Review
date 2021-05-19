@@ -27,6 +27,8 @@
             <br />
             {{this.yearOfPublication}}
             <br />{{this.Genre}}
+            <br><a href="/toComment/{{this._id}}" class="btn btn-danger">add
+                  comment</a>
             <br /><a href="/download/{{this._id}}" class="btn btn-success">download</a>
           </div>
         {{/if}}
@@ -39,6 +41,7 @@
         {{#each this}}
           {{#if this.Date}}
             <div class="row">
+              <div class="row">
               <div class="col"><p>{{this.comment}}</p></div>
               <div class="col"> <p>rating:{{this.rate}}</p></div>
               
@@ -61,7 +64,12 @@
                 </div>
               {{/if}}
             </div>
-
+           </div>
+           <div class="row">
+             <div class="col"><button onclick="like('{{this._id}}','{{this.book_Id}}')" >+</button></div>
+             <div class="col">{{this.likes}}</div>
+             <div class="col"><button onclick="dislike('{{this._id}}','{{this.book_Id}}')" >-</button></div>
+           </div>
           {{/if}}
         {{/each}}
       {{/each}}
@@ -106,5 +114,41 @@
  }else{
    alert("pls enter the edit text")
  }
+  }
+  var like=(commentId,bookId)=>{
+   
+     $.ajax({
+       url:"/likeCount",
+      method:'post',
+     
+      data:{
+        commentId:commentId,
+        bookId:bookId,
+       count:1
+    
+        },
+        success:()=>{
+          location.reload()
+        }
+     
+    })
+  }
+   var dislike=(commentId,bookId)=>{
+     $.ajax({
+       url:"/likeCount",
+      method:'post',
+     
+      data:{
+        commentId:commentId,
+        bookId:bookId,
+        count:-1
+        
+    
+        },
+        success:()=>{
+          location.reload()
+        }
+     
+    })
   }
 </script>

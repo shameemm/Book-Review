@@ -26,6 +26,8 @@ const comments = new mongoose.Schema(
           type: mongoose.Types.ObjectId,
           require: true,
         },
+        likes: { type: Number, default:0 },
+        likedIds: [{ type: mongoose.Types.ObjectId }],
         Date: {
           type: Date,
           default: Date.now,
