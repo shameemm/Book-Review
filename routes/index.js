@@ -77,21 +77,31 @@ router.get("/home", verifyLogin, async (req, res) => {
     });
 });
 router.get("/addBook", verifyLogin, (req, res) => {
-  res.render("user/addBook",{name: req.session.user.username});
+  res.render("user/addBook", { name: req.session.user.username });
 });
 router.post("/booksAddToDb", verifyLogin, (req, res) => {
   var image = req.files.bookImage;
+  var file = req.files.bookFile;
+  console.log(req.files);
   userHelpers.bookDataAdder(req.body, req.session.user._id).then((data) => {
-    if (image)
+    if (image && file) {
       image
         .mv("./public/cover-images/" + data._id + ".jpg")
         .then(() => {
-          // console.log("@@@@");
-          res.redirect("/home");
+          file
+            .mv("./public/booksPdf/" + data._id + ".pdf")
+            .then(() => {
+              // console.log("@@@@");
+              res.redirect("/home");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
         });
+    }
     // console.log(data)
   });
 });
@@ -111,7 +121,10 @@ router.get("/deleteBook/:id", verifyLogin, (req, res) => {
     });
 });
 router.get("/toComment/:id", verifyLogin, (req, res) => {
-  res.render("user/addComment", { bookId: req.params.id,name: req.session.user.username });
+  res.render("user/addComment", {
+    bookId: req.params.id,
+    name: req.session.user.username,
+  });
 });
 router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
   userHelpers
@@ -130,20 +143,32 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
       userHelper
         .getBookReview(req.params.id)
         .then((comments) => {
-          userHelper.userVerify(comments, req.session.user._id).then((com) => {
-            if (comments) {
-              res.render("user/bookView", {
-                details: data,
-                review: com,
+          // console.log(comments);
+          if (comments[0].commentData) {
+            userHelper
+              .userVerify(comments, req.session.user._id)
+              .then((com) => {
+                if (com) {
+                  res.render("user/bookView", {
+                    details: data,
+                    review: com,
+                    name:req.session.user.usename
+                  });
+                  // console.log(com);
+                }
               });
-              // console.log(com);
-            } else {
-              res.render("user/bookView", { details: data ,name:req.session.user.name});
-            }
-          });
+          } else {
+            res.render("user/bookView", {
+              details: data,
+              name: req.session.user.username,
+            });
+          }
         })
         .catch((err) => {
-          res.send("err" + err);
+          res.render("user/bookView", {
+            details: data,
+            name: req.session.user.username,
+          });
         });
     })
     .catch((err) => {
@@ -161,16 +186,28 @@ router.post("/deleteComment", verifyLogin, (req, res, next) => {
       res.send(err);
     });
 });
-router.post("/editComment",verifyLogin,(req,res,next)=>{
-  console.log(req.body);
-  res.render("user/editComment", { bookId: req.body.bookId,commentId:req.body.commentId,name: req.session.user.username });
-  // userHelper
-  //   .editComment(req.body)
-  //   .then(() => {
-  //     res.json(true);
-  //   })
-  //   .catch((err) => {
-  //     res.send(err);
-  //   });
-})
+router.post("/editComment", verifyLogin, (req, res, next) => {
+  // console.log(req.body);
+
+  userHelper
+    .editComment(req.body)
+    .then(() => {
+      res.json(true);
+      // console.log("oo");
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+router.get("/download/:bookId", (req, res) => {
+  console.log(req.params.bookId);
+  res.download(
+    "./public/booksPdf/" + req.params.bookId + ".pdf",
+    "thisisbook.pdf",
+    (err) => {
+      if (err) console.log(err);
+      else console.log("suces");
+    }
+  );
+});
 module.exports = router;

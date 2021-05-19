@@ -27,7 +27,7 @@
             <br />
             {{this.yearOfPublication}}
             <br />{{this.Genre}}
-
+            <br /><a href="/download/{{this._id}}" class="btn btn-success">download</a>
           </div>
         {{/if}}
       {{/each}}
@@ -37,10 +37,13 @@
       <hr />
       {{#each review}}
         {{#each this}}
-          {{#if this.comment}}
+          {{#if this.Date}}
             <div class="row">
               <div class="col"><p>{{this.comment}}</p></div>
               <div class="col"> <p>rating:{{this.rate}}</p></div>
+              
+              
+              
               {{#if this.userVerification}}
                 <div class="col" ><button
                 onclick="editComment('{{this._id}}','{{this.book_Id}}')"
@@ -83,17 +86,25 @@
     })
   }
   var editComment=(comId,bookId)=>{
- 
+ var edit=prompt("enter the edit");
+ if(edit){
     $.ajax({
        url:"/editComment",
       method:'post',
      
       data:{
         commentId:comId,
-        bookId:bookId
+        bookId:bookId,
+        text:edit
     
+        },
+        success:()=>{
+          location.reload()
         }
      
     })
+ }else{
+   alert("pls enter the edit text")
+ }
   }
 </script>

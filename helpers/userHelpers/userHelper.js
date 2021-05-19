@@ -51,7 +51,15 @@ module.exports = {
               commentDataSchema
                 .findOneAndDelete({ bookId: bookId })
                 .then(() => {
-                  resolve();
+                  fse
+                    .remove("./public/booksPdf/" + bookId + ".pdf")
+                    .then(() => {
+                      resolve();
+                    })
+                    .catch((err) => {
+                      reject();
+                    });
+
                   // console.log("!@#$")
                 })
                 .catch((err) => {
@@ -182,9 +190,26 @@ module.exports = {
         });
     });
   },
-  editComment:(req)=>{
-    return new Promise(async(resolve,reject)=>{
-      
-    })
-  }
+  editComment: (req) => {
+    return new Promise(async (resolve, reject) => {
+      await commentDataSchema
+        .updateOne(
+          {
+            bookId: req.bookId,
+            commentData: { $elemMatch: { _id: req.commentId } },
+          },
+          {
+            $set: { "commentData.$.comment": req.text },
+          }
+        )
+
+        .then((data) => {
+          // console.log(data);
+          resolve();
+        })
+        .then((err) => {
+          reject(err);
+        });
+    });
+  },
 };
