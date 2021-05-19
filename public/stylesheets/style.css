@@ -51,3 +51,32 @@ body{
     border: none;
     cursor: pointer;
 }
+.logout{
+    position: fixed;
+    right: 1px;
+    padding-right: 15px;
+    z-index: 2;
+  }
+  .nav a {
+    position: fixed;
+    right: 1px;
+    padding-right: 15px;
+    font-size: 20px;
+    color: #33363a;
+    z-index: 2;
+  }
+  #home {
+    top: 100px;
+    font-size: 45px;
+  }
+  
+  #books {
+    top: 200px;
+    font-size: 40px;
+    border-radius: 4px;
+  }
+  
+  #review {
+    top: 300px;
+    font-size: 40px;
+  }
