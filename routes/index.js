@@ -24,6 +24,9 @@ router.get("/signUpPage", (req, res, next) => {
 router.get("/add-review", function (req, res, next) {
   res.render("user/add-review");
 });
+router.get("/book-table", (req, res, next) => {
+  res.render("user/homePage");
+});
 // validation user data from login page
 router.post("/signIn", async (req, res) => {
   userLogger
@@ -67,7 +70,7 @@ router.get("/home", verifyLogin, async (req, res) => {
     .bookDataPicker()
     .then((data) => {
       // console.log(data)
-      res.render("user/homePage", {
+      res.render("user/home", {
         name: req.session.user.username,
         books: data,
       });
