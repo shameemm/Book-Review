@@ -38,13 +38,14 @@ const booksData = new mongoose.Schema(
       type: String,
       require: true,
     },
-    likeNumber: { type: Number, default: 0 },
+    likeNumber: { type: Number, default: 0, minimum: 0 },
     likedId: [
       {
         user: { type: mongoose.Types.ObjectId },
+        // ckeck: { type: Boolean, default: true },
       },
     ],
-
+    likeCheck: { type: Boolean, default: false },
     Date: {
       type: Date,
       default: Date.now,

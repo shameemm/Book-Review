@@ -133,7 +133,7 @@ router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
   userHelpers
     .addComment(req.body, req.session.user._id)
     .then(() => {
-      res.redirect("/bookField/"+req.body.bookId);
+      res.redirect("/bookField/" + req.body.bookId);
     })
     .catch(() => {
       res.send("comment add fails");
@@ -143,35 +143,43 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
   userHelper
     .getBookDetails(req.params.id)
     .then((data) => {
+      // console.log(data);
       userHelper
-        .getBookReview(req.params.id)
-        .then((comments) => {
-          // console.log(comments);
-          if (comments[0].commentData) {
-            userHelper
-              .userVerify(comments, req.session.user._id)
-              .then((com) => {
-                if (com) {
-                  res.render("user/bookView", {
-                    details: data,
-                    review: com,
-                    name:req.session.user.usename
+        .likeCheck(data, req.session.user._id)
+        .then((chekedData) => {
+          userHelper
+            .getBookReview(req.params.id)
+            .then((comments) => {
+              // console.log(comments);
+              if (comments[0].commentData) {
+                userHelper
+                  .userVerify(comments, req.session.user._id)
+                  .then((com) => {
+                    if (com) {
+                      res.render("user/bookView", {
+                        details:chekedData,
+                        review: com,
+                        name: req.session.user.usename,
+                      });
+                      // console.log(com);
+                    }
                   });
-                  // console.log(com);
-                }
+              } else {
+                res.render("user/bookView", {
+                  details: data,
+                  name: req.session.user.username,
+                });
+              }
+            })
+            .catch((err) => {
+              res.render("user/bookView", {
+                details: data,
+                name: req.session.user.username,
               });
-          } else {
-            res.render("user/bookView", {
-              details: data,
-              name: req.session.user.username,
             });
-          }
         })
-        .catch((err) => {
-          res.render("user/bookView", {
-            details: data,
-            name: req.session.user.username,
-          });
+        .catch(() => {
+          res.status(404);
         });
     })
     .catch((err) => {
@@ -213,21 +221,24 @@ router.get("/download/:bookId", (req, res) => {
     }
   );
 });
-router.post("/likeCount",verifyLogin,(req,res)=>{
+router.post("/likeCount", verifyLogin, (req, res) => {
   // console.log(req.body)
-  userHelper.commentLiker(req.body,req.session.user._id).then(()=>{
-    res.json(true)
-  }).catch(()=>{
-
-  })
-
-})
-router.post("/bookLiker",verifyLogin,(req,res)=>{
-  console.log(req.body)
-  userHelper.bookLiker(req.body,req.session.user._id).then(()=>{
-    res.json(true)
-  }).then((err)=>{
-    res.send("err")
-  })
-})
+  userHelper
+    .commentLiker(req.body, req.session.user._id)
+    .then(() => {
+      res.json(true);
+    })
+    .catch(() => {});
+});
+router.post("/bookLiker", verifyLogin, (req, res) => {
+  console.log(req.body);
+  userHelper
+    .bookLiker(req.body, req.session.user._id)
+    .then(() => {
+      res.json(true);
+    })
+    .then((err) => {
+      res.send("err");
+    });
+});
 module.exports = router;

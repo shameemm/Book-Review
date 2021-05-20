@@ -239,44 +239,59 @@ module.exports = {
   bookLiker: (req, userId) => {
     return new Promise(async (resolve, reject) => {
       req.count = parseInt(req.count);
-      bookDataSchema.find({
+      var exist = await bookDataSchema.find({
         _id: req.bookId,
-        likedId: { $elemMatch: { user: req.commentId } },
-      }).then((data)=>{
-        console.log(data)
-      }).catch(()=>{
-        console.log("%%")
-      })
-      //   bookDataSchema
-      //     .updateOne(
-      //       {
-      //         _id: req.bookId,
-      //       },
-      //       {
-      //         $inc: { likeNumber: req.count },
-      //         $push: { likedId: { user: userId } },
-      //       }
-      //     )
-      //     .then(() => {
-      //       // bookDataSchema
-      //       //   .updateOne(
-      //       //     {
-      //       //       _id: userId,
-      //       //     },
-      //       //     {
-      //       //       $set: { bookLike: true },
-      //       //     }
-      //       //   )
-      //       //   .then(() => {
-      //       resolve();
-      //       // })
-      //       // .catch((err) => {
-      //       //   reject(err);
-      //       // });
-      //     })
-      //     .catch((err) => {
-      //       reject(err);
-      //     });
+        likedId: { $elemMatch: { user: userId } },
+      });
+      if (!exist[0]) {
+        if (req.count == 1) {
+          bookDataSchema
+            .updateOne(
+              {
+                _id: req.bookId,
+              },
+              {
+                $inc: { likeNumber: req.count },
+                $push: { likedId: { user: userId } },
+              }
+            )
+            .then(() => {
+              resolve();
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        }
+      } else {
+        if (req.count == -1) {
+          bookDataSchema
+            .updateOne(
+              {
+                _id: req.bookId,
+              },
+              {
+                $inc: { likeNumber: req.count },
+                $pull: { likedId: { user: userId } },
+              }
+            )
+            .then(() => {
+              resolve();
+            })
+            .then(() => {
+              reject();
+            });
+        }
+      }
+    });
+  },
+  likeCheck: (data, userId) => {
+    return new Promise((resolve, reject) => {
+      var len = data.likedId.length;
+      for (var i = 0; i < len; i++) {
+        if (data.likedId[i].user == userId) data.likeCheck = true;
+      }
+      // console.log(data);
+      resolve(data);
     });
   },
 };

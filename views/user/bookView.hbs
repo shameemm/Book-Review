@@ -2,18 +2,24 @@
   <div class="row">
     <div class="col">
       {{#each details}}
+      
         {{#if this.ibnNumber}}
 
-          <div class="pt-5 pl-5">
+          <div class="pl-5">
 
             <img
               src="/cover-images/{{this._id}}.jpg"
               alt="err"
               srcset=""
-              style="height: 300px;width:300px"
+              style="height: 100px;width:100px"
             />
           </div>
-          <div>
+          <div class="col">
+            <a
+                  href="/deleteBook/{{this._id}}"
+                  class="btn btn-danger"
+                >delete</a>
+                <br>
             {{this.ibnNumber}}
             <br />
             {{this.bookName}}
@@ -27,10 +33,27 @@
             <br />
             {{this.yearOfPublication}}
             <br />{{this.Genre}}
+         </div>
+            <div class="col">
             <br><a href="/toComment/{{this._id}}" class="btn btn-danger">add
                   comment</a>
             <br /><a href="/download/{{this._id}}" class="btn btn-success">download</a>
           </div>
+        <div class="col">
+          <br>{{#if this.likeCheck}}
+                  <button onclick="dislikeBook('{{this._id}}')">dis LIKE</button>
+                {{else}}
+              
+                  <button onclick="likeBook('{{this._id}}')">LIKE</button>
+                 {{/if}}
+              <br>
+              <p id="likes">{{this.likeNumber}}</p>
+                
+                
+               
+
+        </div>
+          
         {{/if}}
       {{/each}}
     </div>
@@ -66,9 +89,9 @@
             </div>
            </div>
            <div class="row">
-             <div class="col"><button onclick="like('{{this._id}}','{{this.book_Id}}')" >+</button></div>
+             <div class="col"><button onclick="likeComment('{{this._id}}','{{this.book_Id}}')" >+</button></div>
              <div class="col">{{this.likes}}</div>
-             <div class="col"><button onclick="dislike('{{this._id}}','{{this.book_Id}}')" >-</button></div>
+             <div class="col"><button onclick="dislikeComment('{{this._id}}','{{this.book_Id}}')" >-</button></div>
            </div>
           {{/if}}
         {{/each}}
@@ -115,7 +138,7 @@
    alert("pls enter the edit text")
  }
   }
-  var like=(commentId,bookId)=>{
+  var likeComment=(commentId,bookId)=>{
    
      $.ajax({
        url:"/likeCount",
@@ -133,7 +156,7 @@
      
     })
   }
-   var dislike=(commentId,bookId)=>{
+   var dislikeComment=(commentId,bookId)=>{
      $.ajax({
        url:"/likeCount",
       method:'post',
@@ -149,6 +172,34 @@
           location.reload()
         }
      
+    })
+  }
+   var likeBook=(bookId)=>{
+ 
+    $.ajax({
+       url:"/bookLiker",
+      method:'post',
+     
+      data:{
+        count:1,
+        bookId:bookId
+    
+        },
+      success:()=>{location.reload()}
+    })
+  }
+  var dislikeBook=(bookId)=>{
+
+    $.ajax({
+       url:"/bookLiker",
+      method:'post',
+     
+      data:{
+        count:-1,
+        bookId:bookId
+    
+        },
+      success:()=>{location.reload() }
     })
   }
 </script>
