@@ -15,11 +15,7 @@
             />
           </div>
           <div class="col">
-            <a
-                  href="/deleteBook/{{this._id}}"
-                  class="btn btn-danger"
-                >delete</a>
-                <br>
+           
             {{this.ibnNumber}}
             <br />
             {{this.bookName}}
@@ -35,8 +31,8 @@
             <br />{{this.Genre}}
          </div>
             <div class="col">
-            <br><a href="/toComment/{{this._id}}" class="btn btn-danger">add
-                  comment</a>
+
+           
             <br /><a href="/download/{{this._id}}" class="btn btn-success">download</a>
           </div>
         <div class="col">
@@ -48,8 +44,13 @@
                  {{/if}}
               <br>
               <p id="likes">{{this.likeNumber}}</p>
-                
-                
+                <form method="post" action="/addCommentToTheDb">
+                  <input type="text" name="comment" placeholder="write your comment about this page">
+                   <input type="hidden" name="bookId" value="{{this._id}}">
+                  <button type="submit" class="btn btn-success">comment</button>
+                </form>
+               <br><a href="/toComment/{{this._id}}" class="btn btn-danger">add
+                  comment</a>  
                
 
         </div>
@@ -66,7 +67,7 @@
             <div class="row">
               <div class="row">
               <div class="col"><p>{{this.comment}}</p></div>
-              <div class="col"> <p>rating:{{this.rate}}</p></div>
+              
               
               
               

@@ -24,8 +24,18 @@ router.get("/signUpPage", (req, res, next) => {
 router.get("/add-review", function (req, res, next) {
   res.render("user/add-review");
 });
-router.get("/book-table", (req, res, next) => {
-  res.render("user/homePage");
+router.get("/book-table", verifyLogin, (req, res, next) => {
+  userHelper
+    .getUserBook(req.session.user._id)
+    .then((data) => {
+      res.render("user/myBookPage", {
+        name: req.session.user.username,
+        books: data,
+      });
+    })
+    .catch((err) => {
+      res.send("error" + err);
+    });
 });
 // validation user data from login page
 router.post("/signIn", async (req, res) => {
@@ -123,12 +133,12 @@ router.get("/deleteBook/:id", verifyLogin, (req, res) => {
       res.send("some thing went wrong");
     });
 });
-router.get("/toComment/:id", verifyLogin, (req, res) => {
-  res.render("user/addComment", {
-    bookId: req.params.id,
-    name: req.session.user.username,
-  });
-});
+// router.get("/toComment/:id", verifyLogin, (req, res) => {
+//   res.render("user/addComment", {
+//     bookId: req.params.id,
+//     name: req.session.user.username,
+//   });
+// });
 router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
   userHelpers
     .addComment(req.body, req.session.user._id)
@@ -157,7 +167,7 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
                   .then((com) => {
                     if (com) {
                       res.render("user/bookView", {
-                        details:chekedData,
+                        details: chekedData,
                         review: com,
                         name: req.session.user.usename,
                       });

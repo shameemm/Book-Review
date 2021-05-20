@@ -83,7 +83,6 @@ module.exports = {
       var comm = {
         userId: userId,
         comment: details.comment,
-        rate: details.rate,
       };
       var commentExist = await commentDataSchema.findOne({
         bookId: details.bookId,
@@ -216,23 +215,64 @@ module.exports = {
   commentLiker: (req, userId) => {
     return new Promise(async (resolve, reject) => {
       req.count = parseInt(req.count);
+      // console.log(req, userId);
       commentDataSchema
-        .updateOne(
-          {
-            bookId: req.bookId,
-            commentData: { $elemMatch: { _id: req.commentId } },
-          },
-          {
-            $inc: { "commentData.$.likes": req.count },
-          }
-        )
-        .then(() => {
-          console.log("!!!");
-          resolve();
+        .findOne({
+          bookId: req.bookId,
         })
-        .catch((err) => {
-          reject();
-          console.log(err + "@@@");
+        .then((data) => {
+          // console.log(data.commentData);
+          commentCheckValidatorLevelOne(data.commentData, req.commentId, userId)
+            .then((check) => {
+              console.log(check);
+              // console.log("comment exist");
+              if (req.count == -1) {
+                commentDataSchema
+                  .updateOne(
+                    {
+                      bookId: req.bookId,
+                      commentData: { $elemMatch: { _id: req.commentId } },
+                    },
+                    {
+                      $inc: { "commentData.$.likes": req.count },
+                      $pull: { "commentData.$.likedIds": { ID: userId } },
+                    }
+                  )
+                  .then(() => {
+                    // console.log("!!!");
+                    resolve();
+                  })
+                  .catch((err) => {
+                    reject();
+                    console.log(err + "@@@");
+                  });
+              }
+            })
+            .catch((check) => {
+              console.log(check);
+              // console.log("comment not exist");
+              if (req.count == 1) {
+                commentDataSchema
+                  .updateOne(
+                    {
+                      bookId: req.bookId,
+                      commentData: { $elemMatch: { _id: req.commentId } },
+                    },
+                    {
+                      $inc: { "commentData.$.likes": req.count },
+                      $push: { "commentData.$.likedIds": { ID: userId } },
+                    }
+                  )
+                  .then(() => {
+                    console.log("!!!");
+                    resolve();
+                  })
+                  .catch((err) => {
+                    reject();
+                    console.log(err + "@@@");
+                  });
+              }
+            });
         });
     });
   },
@@ -294,4 +334,33 @@ module.exports = {
       resolve(data);
     });
   },
+  getUserBook: (userId) => {
+    return new Promise(async (resolve, reject) => {
+      bookDataSchema
+        .find({ userId: userId })
+        .then((data) => {
+          resolve(data);
+        })
+        .then((err) => {
+          reject(err);
+        });
+    });
+  },
 };
+
+function commentCheckValidatorLevelOne(data, commentId, userId) {
+  return new Promise((resolve, reject) => {
+    var dataLen = data.length;
+    for (var i = 0; i < dataLen; i++) {
+      if (data[i]._id == commentId) {
+        var idsLen = data[i].likedIds.length;
+        for (var j = 0; j < idsLen; j++) {
+          if (data[i].likedIds[j].ID == userId) {
+            resolve(true);
+          }
+        }
+        reject(false);
+      }
+    }
+  });
+}
