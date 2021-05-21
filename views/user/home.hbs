@@ -1,18 +1,20 @@
 <header>
     <div class="top">
         <div class="card-body" style="width: 20%;">
+            <form method="POST" id="check-form" action="/search">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." />
-                <span class="input-group-append"><button class="btn btn-secondary" type="button">Go!</button></span>
+                <input class="form-control" name="searchKey" id="searchKey" type="text" placeholder="Enter Book Name..." />
+                <span class="input-group-append" ><button class="btn btn-secondary" type="submit">Go!</button></span>
             </div>
+            </form>
             <nav id="navbar" class="navbar">
             <ul>
             <li class="dropdown"><a href="#"><i class="fas fa-ellipsis-v"></i></a>
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">My Books</a></li>
+              <li><a href="/home">Home</a></li>
+              <li><a href="/book-table">My Books</a></li>
               {{!-- <li><a href="#">Review</a></li> --}}
-              <li><a href="#">Logout</a></li>
+              <li><a href="/logOut">Logout</a></li>
             </ul>
           </li>
             </ul>
@@ -41,7 +43,7 @@
         <div class="col-md-4">
           <div class="card-box mt-4">
             <img src="/cover-images/{{this._id}}.jpg" alt="err" style="width: 16rem; height:20rem"/>
-            <h4 class="title"><a href="">{{this.bookName}}</a></h4>
+            <h4 class="title"><a href="/bookField/{{this._id}}">{{this.bookName}}</a></h4>
             <p class="description">{{this.authorName}}</p>
             <a href="/bookField/{{this._id}}"><button class="button mt-2"><span>View</span></button></a>
           </div>
@@ -52,6 +54,22 @@
       </div>
     </div>
   </section>
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+  <script>
+ $(document).ready(function() {
+    $("#check-form").validate({
+rules:{
+    searchKey:{
+        required:true
+    }
+},
+  message:{ 
+      searchKey: "pls enter the book name"
+        }
+
+    })
+       })
+</script>
 
 <style>
 

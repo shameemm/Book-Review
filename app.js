@@ -27,7 +27,7 @@ app.engine(
   })
 );
 
-app.use(session({ secret: "secret", cookie: { maxAge: 600000 } }));
+app.use(session({ secret: "secret", cookie: { maxAge: 6000000 } }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

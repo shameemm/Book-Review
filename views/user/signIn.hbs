@@ -9,10 +9,11 @@
                 <div class="col-lg-7 px-5 pt-5 pb-5">
                     <h1 class="font-weight-bold py-3">BookView</h1>
                     <h3>User Login</h3>
-                    <form action="/signIn" method="POST">
+                    <form action="/signIn" id="login" method="POST">
                         <div class="form-row">
                             <div class="col-lg-7">
                                 <input type="email" name="email" class="form-control my-3 p-4" placeholder="Email">
+                               
                             </div>
                         </div>
                         <div class="form-row">
@@ -37,6 +38,27 @@
             </div>
         </div>
     </section>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script>
+    $("#login").validate({
+        rules:{
+            email:{
+                required:true,
+                email:true
+            },
+            password:{
+                required:true
+            },
+        },
+        messages:{
+            email:"<b>*pls enter a valied email</b>",
+             password:"<b>*pls enter the password</b>"
+        }
+        
+        
+    })
+   
+</script>
     <style>
 		* {
 			padding: 0;
@@ -80,4 +102,3 @@
 		}
 	</style>
   
- <script src="/javascripts/script.js"></script>

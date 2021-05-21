@@ -9,7 +9,7 @@
 <div class="main">
   <div class="col-md-6 col-sm-12">
     <div class="login-form">
-      <form action="/signUp" method="POST" >
+      <form action="/signUp" id="signUp" method="POST" >
         <div class="form-group">
           <label>Name</label>
           <input
@@ -49,12 +49,45 @@
 
         <button type="submit" class="btn btn-black">Join Us</button>
         <br>
-        <p class="pt-3">Already have <a href="/">account??</a></p>
+        <p class="pt-3" >Already have <a style="color: black;" href="/">account??</a></p>
 
       </form>
     </div>
   </div>
 </div>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script>
+    $("#signUp").validate({
+        rules:{
+            email:{
+                required:true,
+                email:true
+            },
+            name:{
+              required:true
+            },
+            mobile:{
+              required:true,
+              number:true,
+              minlength:10,
+              maxlength:12
+            },
+            password:{
+                required:true,
+                minlength:7
+            },
+        },
+        messages:{
+            email:"<b>*pls enter a valied email</b>",
+             password:"<b>*minimum length 7 required</b>",
+             name:"<b>*pls enter the name</b>",
+             mobile:"<b>*pls enter a valied mobile number</b>",
+        }
+        
+        
+    })
+   
+</script>
 <style>
   body { font-family: "Lato", sans-serif; } .main-head{ height: 150px;
   background: #FFF; } .sidenav { height: 100%; background-color: #000;
