@@ -1,6 +1,120 @@
 body{
-    background: -webkit-linear-gradient(left, #0072ff, #00c6ff);
-}
+    background: url("/background/background.jpg") top center;
+  }
+  
+  body:before {
+    content: "";
+    background: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  #h1 {
+    margin: 0;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 72px;
+    color: #124265;
+  }
+  
+  #h2 {
+    color: #5e5e5e;
+    margin: 10px 0 0 0;
+    font-size: 22px;
+  }
+  
+  #books {
+    width: 100%;
+    position: relative;
+    background-size: cover;
+    position: relative;
+  }
+  
+  #books .card-boxes {
+    margin-top: 100px;
+  }
+  
+  #books .card-box { 
+     width: 20rem;
+    height: 32rem;
+    padding: 30px 30px;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 0 29px 0 rgba(18, 66, 101, 0.08);
+    border-radius: 8px;
+    z-index: 1;
+  }
+  
+  #books .card-box .title {
+    font-weight: 700;
+    margin-bottom: 15px;
+    padding-top: 20px;
+    font-size: 18px;
+  }
+  
+  #books .card-box .title a {
+    color: #124265;
+    transition: 0.3s;
+  }
+  
+  #books .card-box .description {
+    font-size: 15px;
+    line-height: 28px;
+    margin-bottom: 0;
+  }
+  
+  #books .card-box .card {
+    margin-bottom: 20px;
+    padding-top: 10px;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+    font-size: 36px;
+    line-height: 1;
+    color: #2487ce;
+  }
+  .list-unstyled a{
+    color: #124265;
+    text-decoration: none;
+  }
+  .button {
+    border-radius: 5px;
+    background-color: #035599;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px;
+    width: 150px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-top: 50px;
+  }
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  .button:hover span {
+    padding-right: 25px;
+  }
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
 .contact-form{
     background: #fff;
     margin-top: 10%;
