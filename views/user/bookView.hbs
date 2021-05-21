@@ -49,8 +49,7 @@
                    <input type="hidden" name="bookId" value="{{this._id}}">
                   <button type="submit" class="btn btn-success">comment</button>
                 </form>
-               <br><a href="/toComment/{{this._id}}" class="btn btn-danger">add
-                  comment</a>  
+               
                
 
         </div>
@@ -90,9 +89,13 @@
             </div>
            </div>
            <div class="row">
-             <div class="col"><button onclick="likeComment('{{this._id}}','{{this.book_Id}}')" >+</button></div>
-             <div class="col">{{this.likes}}</div>
+            {{#if this.commentUserVerification}}
              <div class="col"><button onclick="dislikeComment('{{this._id}}','{{this.book_Id}}')" >-</button></div>
+             {{else}}
+             <div class="col"><button onclick="likeComment('{{this._id}}','{{this.book_Id}}')" >+</button></div>
+             {{/if}}
+             <div class="col">{{this.likes}}</div>
+            
            </div>
           {{/if}}
         {{/each}}

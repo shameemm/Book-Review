@@ -225,7 +225,7 @@ module.exports = {
           commentCheckValidatorLevelOne(data.commentData, req.commentId, userId)
             .then((check) => {
               console.log(check);
-              // console.log("comment exist");
+              console.log("comment exist");
               if (req.count == -1) {
                 commentDataSchema
                   .updateOne(
@@ -250,7 +250,7 @@ module.exports = {
             })
             .catch((check) => {
               console.log(check);
-              // console.log("comment not exist");
+              console.log("comment not exist");
               if (req.count == 1) {
                 commentDataSchema
                   .updateOne(
@@ -260,11 +260,14 @@ module.exports = {
                     },
                     {
                       $inc: { "commentData.$.likes": req.count },
-                      $push: { "commentData.$.likedIds": { ID: userId } },
+                      $push: {
+                        "commentData.$.likedIds": { ID: userId, check: true },
+                      },
                     }
                   )
                   .then(() => {
                     console.log("!!!");
+
                     resolve();
                   })
                   .catch((err) => {
@@ -342,6 +345,34 @@ module.exports = {
           resolve(data);
         })
         .then((err) => {
+          reject(err);
+        });
+    });
+  },
+  commentUserVerification: (data, userId) => {
+    return new Promise((resolve, reject) => {
+      var len = data[0].likedIds.length;
+      console.log(len);
+      for (var i = 0; i < len; i++) {
+        if (data[0].likedIds[i].ID == userId) {
+          data[0].commentUserVerification = true;
+        }
+      }
+      resolve(data);
+    });
+  },
+  search: (key) => {
+    return new Promise(async(resolve, reject) => {
+      console.log(key)
+    await  bookDataSchema
+        .find({ bookName:key})
+        .then((data) => {
+         
+          // console.log(data+"k")
+          resolve(data);
+        })
+        .catch((err) => {
+          console.log(err+"p")
           reject(err);
         });
     });

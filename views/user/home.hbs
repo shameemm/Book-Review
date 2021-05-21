@@ -46,8 +46,10 @@
                         <h5 class="card-header">Search</h5>
                         <div class="card-body">
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search for..." />
-                                <span class="input-group-append"><button class="btn btn-secondary" type="button">Go!</button></span>
+                                <form method="post" action="/search">
+                                <input class="form-control" type="text" name="searchKey" placeholder="enter book name" />
+                                <span class="input-group-append"><button class="btn btn-secondary" type="submit">Go!</button></span>
+                                </form>
                             </div>
                         </div>
                     </div>

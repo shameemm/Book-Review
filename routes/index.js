@@ -165,14 +165,34 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
                 userHelper
                   .userVerify(comments, req.session.user._id)
                   .then((com) => {
-                    if (com) {
+                    // console.log(com[0]);
+                    if (com[0]) {
+                      userHelper
+                        .commentUserVerification(com, req.session.user._id)
+                        .then((verifiedComm) => {
+                          console.log(verifiedComm);
+
+                          res.render("user/bookView", {
+                            name: req.session.user.usename,
+                            details: chekedData,
+                            review: verifiedComm,
+                          });
+                          //       // console.log(com);
+                        });
+                    } else {
                       res.render("user/bookView", {
-                        details: chekedData,
-                        review: com,
-                        name: req.session.user.usename,
+                        details: data,
+                        name: req.session.user.username,
                       });
-                      // console.log(com);
                     }
+                    // if (com) {
+                    //   res.render("user/bookView", {
+                    //     details: chekedData,
+                    //     review: com,
+                    //     name: req.session.user.usename,
+                    //   });
+                    //   // console.log(com);
+                    // }
                   });
               } else {
                 res.render("user/bookView", {
@@ -251,4 +271,12 @@ router.post("/bookLiker", verifyLogin, (req, res) => {
       res.send("err");
     });
 });
+router.post("/search",verifyLogin,(req,res)=>{
+  userHelper.search(req.body.searchKey).then((data)=>{
+    console.log(data[0]._id)
+    res.redirect("/bookField/" + data[0]._id);
+  }).catch((err)=>{
+   res.render("user/noBookFound",{key:req.body.searchKey})
+  })
+})
 module.exports = router;

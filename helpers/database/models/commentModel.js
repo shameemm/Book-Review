@@ -33,7 +33,7 @@ const comments = new mongoose.Schema(
         likedIds: [
           {
             ID: { type: mongoose.Types.ObjectId },
-            check: { type: Boolean, default: true },
+            check: { type: Boolean, default: false },
           },
         ],
         Date: {
