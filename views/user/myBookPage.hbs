@@ -45,18 +45,17 @@
                   href="/deleteBook/{{this._id}}"
                   class="btn btn-danger"
                 >delete</a></td>
-              {{!-- <td><a href="/toComment/{{this._id}}" class="btn btn-primary">to
-                  comment</a></td> --}}
+              
               <td><a
                   href="/bookField/{{this._id}}"
                   class="btn btn-primary"
                 >view</a></td>
               
-                <td><button onclick="likeBook('{{this._id}}')">LIKE</button></td>
+               
 
                 <td>{{this.likes}}</td>
 
-                <td><button onclick="dislikeBook('{{this._id}}')">dis LIKE</button></td>
+                
 
             </tr>
           {{/if}}

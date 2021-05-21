@@ -15,19 +15,27 @@ const comments = new mongoose.Schema(
           type: String,
           require: true,
         },
-        rate: {
-          type: Number,
-          require: true,
-        },
+        // rate: {
+        //   type: Number,
+        //   require: true,
+        // },
         userVerification: {
+          type: Boolean,
+        },
+        commentUserVerification: {
           type: Boolean,
         },
         book_Id: {
           type: mongoose.Types.ObjectId,
           require: true,
         },
-        likes: { type: Number, default:0 },
-        likedIds: [{ type: mongoose.Types.ObjectId }],
+        likes: { type: Number, default: 0 },
+        likedIds: [
+          {
+            ID: { type: mongoose.Types.ObjectId },
+            check: { type: Boolean, default: false },
+          },
+        ],
         Date: {
           type: Date,
           default: Date.now,
