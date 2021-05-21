@@ -2,115 +2,169 @@
   <div class="row">
     <div class="col">
       {{#each details}}
+      {{#if this.ibnNumber}}
+      <table class="table table-borderless">
+
+        <tbody>
+          <tr>
+            <th scope="row">Book Number</th>
+            <td>{{this.ibnNumber}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Book Name</th>
+            <td>
+              <h4>{{this.bookName}}</h4>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Author Name</th>
+            <td>
+              <h5>{{this.authorName}}</h5>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Language</th>
+            <td>{{this.language}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Purchase Link</th>
+            <th><a class="btn btn-primary" href={{this.purchaseLink}} role="button">Click Here</a></th>
+          </tr>
+          <tr>
+            <th scope="row">Year Of Publication</th>
+            <td>{{this.yearOfPublication}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Genre</th>
+            <td>{{this.Genre}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Description</th>
+            <td>{{this.description}}</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="/download/{{this._id}}" class="btn btn-success">Download</a></th>
+            <td>{{#if this.likeCheck}}
+              <svg onclick="dislikeBook('{{this._id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                fill="currentColor" class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
+                <path
+                  d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z" />
+              </svg>
+
+              {{else}}
+              <svg onclick="likeBook('{{this._id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                <path
+                  d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
+              </svg>
+                
+              {{/if}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       
-        {{#if this.ibnNumber}}
-
-          <div class="pl-5">
-
-            <img
-              src="/cover-images/{{this._id}}.jpg"
-              alt="err"
-              srcset=""
-              style="height: 100px;width:100px"
-            />
-          </div>
-          <div class="col">
-           
-            {{this.ibnNumber}}
-            <br />
-            {{this.bookName}}
-            <br />
-            {{this.authorName}}
-
-            <br />
-            {{this.language}}
-            <br />{{this.description}}
-            <br />{{this.purchaseLink}}
-            <br />
-            {{this.yearOfPublication}}
-            <br />{{this.Genre}}
-         </div>
-            <div class="col">
-
-           
-            <br /><a href="/download/{{this._id}}" class="btn btn-success">download</a>
-          </div>
-        <div class="col">
-          <br>{{#if this.likeCheck}}
-                   {{!-- <svg onclick="dislikeBook('{{this._id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
-  <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-</svg> --}}
-<svg onclick="dislikeBook('{{this._id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
-  <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z"/>
-</svg>
-
-                {{else}}
-                   <svg onclick="likeBook('{{this._id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
-  <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-</svg>
-                  {{!-- <button onclick="likeBook('{{this._id}}')">LIKE</button> --}}
-                 {{/if}}
-              <br>
-              <p id="likes">{{this.likeNumber}}</p>
-                <form method="post" action="/addCommentToTheDb">
-                  <input type="text" name="comment" placeholder="write your comment about this page">
-                   <input type="hidden" name="bookId" value="{{this._id}}">
-                  <button type="submit" class="btn btn-success">comment</button>
-                </form>
-               
-               
-
-        </div>
-          
+      
+      <div class="col">
+        {{#if this.likeCheck}}
+        
         {{/if}}
+     
+        <p id="likes"><b>{{this.likeNumber}} Prosons Liked This Book</b></p>
+        <form method="post" action="/addCommentToTheDb">
+          <input type="text" name="comment" placeholder="Write your comment about this page">
+          <input type="hidden" name="bookId" value="{{this._id}}">
+          <button type="submit" class="btn btn-success">Comment</button>
+        </form>
+        <div class="col">
+            <p>{{this.comment}}</p>
+        </div>
+        
+
+
+
+      </div>
+
+      {{/if}}
       {{/each}}
     </div>
     <div class="col">
-      <h3>comments</h3>
+      {{#each details}}
+      
+        {{#if this.ibnNumber}}
+      <img
+              src="/cover-images/{{this._id}}.jpg"
+              alt="Cover Page"
+              srcset=""
+              style="height: 400px;width:300px"
+            />
+          {{/if}}
+      {{/each}}
+      <br>
+      <br>
+      <h3>Comments</h3>
       <hr />
       {{#each review}}
-        {{#each this}}
-          {{#if this.Date}}
-            <div class="row">
-              <div class="row">
-              <div class="col"><p>{{this.comment}}</p></div>
-              
-              
-              
-              
-              {{#if this.userVerification}}
-                <div class="col" ><svg xmlns="http://www.w3.org/2000/svg"  onclick="editComment('{{this._id}}','{{this.book_Id}}')" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-  <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-</svg>
-                </div>
-                <div class="col">
-                  
-                  <svg   onclick="deleteComment('{{this._id}}','{{this.book_Id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-</svg>
-                  
-                </div>
-              {{/if}}
-            </div>
-           </div>
-           <div class="row">
-            {{#if this.commentUserVerification}}
-             <div class="col">
-<svg  onclick="dislikeComment('{{this._id}}','{{this.book_Id}}','{{this.likes}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
-  <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z"/>
-</svg></div>
-             {{else}}
-            
-             <div class="col"> <svg onclick="likeComment('{{this._id}}','{{this.book_Id}}','{{this.likes}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
-  <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-</svg></div>
-             {{/if}}
-             <div class="col"><p id="likeCount">{{this.likes}}</p></div>
-            
-           </div>
+      {{#each this}}
+      {{#if this.Date}}
+      <div class="row">
+        <div class="row">
+          <div class="col">
+            <p>{{this.comment}}</p>
+          </div>
+
+
+
+
+          {{#if this.userVerification}}
+          <div class="col"><svg xmlns="http://www.w3.org/2000/svg"
+              onclick="editComment('{{this._id}}','{{this.book_Id}}')" width="16" height="16" fill="currentColor"
+              class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path
+                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+            </svg>
+          </div>
+          <div class="col">
+
+            <svg onclick="deleteComment('{{this._id}}','{{this.book_Id}}')" xmlns="http://www.w3.org/2000/svg"
+              width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path
+                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+              <path fill-rule="evenodd"
+                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+            </svg>
+
+          </div>
           {{/if}}
-        {{/each}}
+        </div>
+      </div>
+      <div class="row">
+        {{#if this.commentUserVerification}}
+        <div class="col">
+          <svg onclick="dislikeComment('{{this._id}}','{{this.book_Id}}','{{this.likes}}')"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
+            <path
+              d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z" />
+          </svg>
+        </div>
+        {{else}}
+
+        <div class="col"> <svg onclick="likeComment('{{this._id}}','{{this.book_Id}}','{{this.likes}}')"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+            <path
+              d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
+          </svg></div>
+        {{/if}}
+        <div class="col">
+          <p id="likeCount">{{this.likes}}</p>
+        </div>
+
+      </div>
+      {{/if}}
+      {{/each}}
       {{/each}}
     </div>
   </div>
@@ -118,107 +172,107 @@
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  var deleteComment=(comId,bookId)=>{
- 
-    $.ajax({
-       url:"/deleteComment",
-      method:'post',
-     
-      data:{
-        commentId:comId,
-        bookId:bookId
-    
-        },
-      success:()=>{location.reload() }
-    })
-  }
-  var editComment=(comId,bookId)=>{
- var edit=prompt("enter the edit");
- if(edit){
-    $.ajax({
-       url:"/editComment",
-      method:'post',
-     
-      data:{
-        commentId:comId,
-        bookId:bookId,
-        text:edit
-    
-        },
-        success:()=>{
-          location.reload()
-        }
-     
-    })
- }else{
-   alert("pls enter the edit text")
- }
-  }
-  var likeComment=(commentId,bookId,likeCount)=>{
-   
-     $.ajax({
-       url:"/likeCount",
-      method:'post',
-     
-      data:{
-        commentId:commentId,
-        bookId:bookId,
-       count:1
-    
-        },
-        success:()=>{
-          //document.getElementById("likeCount").innerHTML=parseInt(likeCount)+1;
-           location.reload()
-          
-        }
-     
-    })
-  }
-   var dislikeComment=(commentId,bookId,likeCount)=>{
-     $.ajax({
-       url:"/likeCount",
-      method:'post',
-     
-      data:{
-        commentId:commentId,
-        bookId:bookId,
-        count:-1
-        
-    
-        },
-        success:()=>{
-          //  document.getElementById("likeCount").innerHTML=parseInt(likeCount)-1;
-           location.reload()
-        }
-     
-    })
-  }
-   var likeBook=(bookId)=>{
- 
-    $.ajax({
-       url:"/bookLiker",
-      method:'post',
-     
-      data:{
-        count:1,
-        bookId:bookId
-    
-        },
-      success:()=>{location.reload()}
-    })
-  }
-  var dislikeBook=(bookId)=>{
+  var deleteComment = (comId, bookId) => {
 
     $.ajax({
-       url:"/bookLiker",
-      method:'post',
-     
-      data:{
-        count:-1,
-        bookId:bookId
-    
+      url: "/deleteComment",
+      method: 'post',
+
+      data: {
+        commentId: comId,
+        bookId: bookId
+
+      },
+      success: () => { location.reload() }
+    })
+  }
+  var editComment = (comId, bookId) => {
+    var edit = prompt("enter the edit");
+    if (edit) {
+      $.ajax({
+        url: "/editComment",
+        method: 'post',
+
+        data: {
+          commentId: comId,
+          bookId: bookId,
+          text: edit
+
         },
-      success:()=>{location.reload() }
+        success: () => {
+          location.reload()
+        }
+
+      })
+    } else {
+      alert("pls enter the edit text")
+    }
+  }
+  var likeComment = (commentId, bookId, likeCount) => {
+
+    $.ajax({
+      url: "/likeCount",
+      method: 'post',
+
+      data: {
+        commentId: commentId,
+        bookId: bookId,
+        count: 1
+
+      },
+      success: () => {
+        //document.getElementById("likeCount").innerHTML=parseInt(likeCount)+1;
+        location.reload()
+
+      }
+
+    })
+  }
+  var dislikeComment = (commentId, bookId, likeCount) => {
+    $.ajax({
+      url: "/likeCount",
+      method: 'post',
+
+      data: {
+        commentId: commentId,
+        bookId: bookId,
+        count: -1
+
+
+      },
+      success: () => {
+        //  document.getElementById("likeCount").innerHTML=parseInt(likeCount)-1;
+        location.reload()
+      }
+
+    })
+  }
+  var likeBook = (bookId) => {
+
+    $.ajax({
+      url: "/bookLiker",
+      method: 'post',
+
+      data: {
+        count: 1,
+        bookId: bookId
+
+      },
+      success: () => { location.reload() }
+    })
+  }
+  var dislikeBook = (bookId) => {
+
+    $.ajax({
+      url: "/bookLiker",
+      method: 'post',
+
+      data: {
+        count: -1,
+        bookId: bookId
+
+      },
+      success: () => { location.reload() }
     })
   }
 </script>
