@@ -331,7 +331,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var len = data.likedId.length;
       for (var i = 0; i < len; i++) {
-        if (data.likedId[i].user == userId) data.likeCheck = true;
+        if (data.likedId[i].user == userId){data.likeCheck = true;}
       }
       // console.log(data);
       resolve(data);
