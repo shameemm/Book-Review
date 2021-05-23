@@ -4,7 +4,7 @@
       <form method="POST" id="check-form" action="/search">
         <div class="input-group">
           <input class="form-control" name="searchKey" id="searchKey" type="text" placeholder="Enter Book Name..." />
-          <span class="input-group-append" ><button class="btn btn-secondary" type="submit">Go!</button></span>
+          <span class="input-group-append"><button class="btn btn-secondary" type="submit">Go!</button></span>
         </div>
       </form>
       <nav id="navbar" class="navbar">
@@ -20,39 +20,39 @@
       </nav>
     </div>
     <div class="user pl-3 pb-3">
-      <h5><i class="fas fa-user"></i>  {{name}}</h5>
+      <h5><i class="fas fa-user"></i> {{name}}</h5>
     </div>
   </div>
 </header>
 <section id="home">
   <div class="sidenav">
-  <a class="active">Categories</a>
-  <a href="">Adventure</a>
-  <a href="">Art</a>
-  <a href="">Children</a>
-  <a href="">Contemparary</a>
-  <a href="">Cooking</a>
-  <a href="">Devolopment</a>
-  <a href="">Dystopian</a>
-  <a href="">Fantasy</a>
-  <a href="">Families & Relationship</a>
-  <a href="">Guide</a>
-  <a href="">Health</a>
-  <a href="">History</a>
-  <a href="">Horror</a>
-  <a href="">Historical-Fiction</a>
-  <a href="">Humor</a>
-  <a href="">Motivational</a>
-  <a href="">Mystery</a>
-  <a href="">Memoir</a>
-  <a href="">Paranormal</a>
-  <a href="">Personal</a>
-  <a href="">Romance</a>
-  <a href="">Science-Fiction</a>
-  <a href="">Thriller</a>
-  <a href="">Travel</a>
+    <a class="active">Categories</a>
+    <a href="">Adventure</a>
+    <a href="">Art</a>
+    <a href="">Children</a>
+    <a href="">Contemparary</a>
+    <a href="">Cooking</a>
+    <a href="">Devolopment</a>
+    <a href="">Dystopian</a>
+    <a href="">Fantasy</a>
+    <a href="">Families & Relationship</a>
+    <a href="">Guide</a>
+    <a href="">Health</a>
+    <a href="">History</a>
+    <a href="">Horror</a>
+    <a href="">Historical-Fiction</a>
+    <a href="">Humor</a>
+    <a href="">Motivational</a>
+    <a href="">Mystery</a>
+    <a href="">Memoir</a>
+    <a href="">Paranormal</a>
+    <a href="">Personal</a>
+    <a href="">Romance</a>
+    <a href="">Science-Fiction</a>
+    <a href="">Thriller</a>
+    <a href="">Travel</a>
 
-</div>
+  </div>
   <div class="row justify-content-center" style="width: 100%;">
     <div class="col-md-4 text-center" style="z-index: 1;">
       <h1 id="h1">Reading corner !!</h1>
@@ -66,14 +66,14 @@
       {{#each books}}
       {{#each this}}
       {{#if this.ibnNumber}}
-        <div class="col-md-4">
-          <div class="card-box mt-4">
-            <img src="/cover-images/{{this._id}}.jpg" alt="err" style="width: 16rem; height:20rem"/>
-            <h4 class="title"><a href="/bookField/{{this._id}}">{{this.bookName}}</a></h4>
-            <p class="description">{{this.authorName}}</p>
-            <a href="/bookField/{{this._id}}"><button class="button mt-2"><span>View</span></button></a>
-          </div>
+      <div class="col-md-4">
+        <div class="card-box mt-4">
+          <img src="/cover-images/{{this._id}}.jpg" alt="err" style="width: 16rem; height:20rem" />
+          <h4 class="title"><a href="/bookField/{{this._id}}">{{this.bookName}}</a></h4>
+          <p class="description">{{this.authorName}}</p>
+          <a href="/bookField/{{this._id}}"><button class="button mt-2"><span>View</span></button></a>
         </div>
+      </div>
       {{/if}}
       {{/each}}
       {{/each}}
@@ -82,41 +82,41 @@
 </section>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script>
- $(document).ready(function() {
+  $(document).ready(function () {
     $("#check-form").validate({
-rules:{
-    searchKey:{
-        required:true
-    }
-},
-  message:{ 
-      searchKey: "pls enter the book name"
+      rules: {
+        searchKey: {
+          required: true
         }
+      },
+      message: {
+        searchKey: "pls enter the book name"
+      }
 
     })
-       })
+  })
 </script>
 <!-- rating.js file -->
 <script>
-// Rating Initialization
-$(document).ready(function() {
-  $('#rateMe2').mdbRate();
-});
+  // Rating Initialization
+  $(document).ready(function () {
+    $('#rateMe2').mdbRate();
+  });
 </script>
 <style>
-
-  .user{
+  .user {
     padding-left: 1rem;
     z-index: 2;
     color: black;
   }
-  
+
   .input-group {
     position: fixed;
     right: 5rem;
     width: 18rem;
     z-index: 2;
   }
+
   .navbar {
     padding: 1rem;
     position: fixed;
@@ -124,7 +124,7 @@ $(document).ready(function() {
     padding-right: 2rem;
     z-index: 2;
   }
-  
+
   .navbar ul {
     margin: 0;
     padding: 0;
@@ -132,11 +132,11 @@ $(document).ready(function() {
     list-style: none;
     align-items: center;
   }
-  
+
   .navbar li {
     position: relative;
   }
-  
+
   .navbar a {
     display: flex;
     align-items: center;
@@ -147,17 +147,19 @@ $(document).ready(function() {
     white-space: nowrap;
     transition: 0.3s;
   }
-  
+
   .navbar a i {
     font-size: 25px;
     line-height: 0;
     margin-left: 5px;
   }
-  
-  .navbar a:hover, .navbar .active, .navbar li:hover > a {
+
+  .navbar a:hover,
+  .navbar .active,
+  .navbar li:hover>a {
     color: #2487ce;
   }
-  
+
   .navbar .dropdown ul {
     display: block;
     position: absolute;
@@ -173,43 +175,46 @@ $(document).ready(function() {
     transition: 0.3s;
     border-radius: 4px;
   }
-  
+
   .navbar .dropdown ul li {
     min-width: 200px;
   }
-  
+
   .navbar .dropdown ul a {
     padding: 10px 20px;
     text-transform: none;
     text-decoration: none;
   }
-  
+
   .navbar .dropdown ul a i {
     font-size: 12px;
   }
-  
-  .navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
+
+  .navbar .dropdown ul a:hover,
+  .navbar .dropdown ul .active:hover,
+  .navbar .dropdown ul li:hover>a {
     color: #2487ce;
   }
-  
-  .navbar .dropdown:hover > ul {
+
+  .navbar .dropdown:hover>ul {
     opacity: 1;
     top: 100%;
     visibility: visible;
   }
-  
+
   .navbar .dropdown .dropdown ul {
     top: 0;
     left: calc(100% - 30px);
     visibility: hidden;
   }
-  
-  .navbar .dropdown .dropdown:hover > ul {
+
+  .navbar .dropdown .dropdown:hover>ul {
     opacity: 1;
     top: 0;
     left: 100%;
     visibility: visible;
   }
+
   .nav a {
     position: fixed;
     right: 1px;
@@ -218,24 +223,24 @@ $(document).ready(function() {
     color: #124265;
     z-index: 2;
   }
-.sidenav {
-  width: 130px;
-  position:absolute;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.8);
-  overflow-x: hidden;
-  padding: 8px 0;
-}
 
-.sidenav a {
-  display: block;
-  color: #124265;
-  padding: 16px;
-  text-decoration: none;
-}
+  .sidenav {
+    width: 130px;
+    position: absolute;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.8);
+    overflow-x: hidden;
+    padding: 8px 0;
+  }
 
-.sidenav a:hover {
-  color: black;
-}
+  .sidenav a {
+    display: block;
+    color: #124265;
+    padding: 16px;
+    text-decoration: none;
+  }
 
+  .sidenav a:hover {
+    color: black;
+  }
 </style>
