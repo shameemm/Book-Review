@@ -5,7 +5,7 @@ const fse = require("fs-extra");
 module.exports = {
   bookDataAdder: (details, userId) => {
     return new Promise(async (resolve, reject) => {
-      console.log(details);
+      // console.log(details);
       var dataSend = new bookDataSchema({
         userId: userId,
         ibnNumber: details.ibnNumber,
@@ -79,7 +79,7 @@ module.exports = {
   },
   addComment: (details, userId) => {
     return new Promise(async (resolve, reject) => {
-      console.log(userId);
+      // console.log(userId);
       var comm = {
         userId: userId,
         comment: details.comment,
@@ -355,7 +355,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var len2 = data[0].likedIds.length;
       var len1 = data.length;
-      console.log("*" + data);
+      // console.log("*" + data);
       for (var j = 0; j < len1; j++) {
         for (var i = 0; i < len2; i++) {
           if (data[j].likedIds[i]) {
@@ -386,42 +386,87 @@ module.exports = {
   },
   addRate: (data, userId) => {
     return new Promise(async (resolve, reject) => {
- 
-      bookDataSchema.findOne({ratedIds:userId}).then((check)=>{
-        if(check){
-        data.rate=data.rate*(-1)
-        
-        bookDataSchema.updateOne(
-            { _id: data.bookId },
-            {
-              $inc: { rate: data.rate },
-              
-            }
-          ).then((data)=>{
-            console.log("$$$"+data)
-          }).catch((err)=>{
-            console.log(err)
-          })
-        }else{
-          bookDataSchema.updateOne(
-            { _id: data.bookId },
-            {
-              $inc: { rate: data.rate },
-              $push: { ratedIds: userId },
-            }
-          ).then((data)=>{
-            console.log("***"+data)
-          }).catch((err)=>{
-            console.log(err)
-          })
-        }
-      }).catch((err)=>{
-       
-      })
-    
+      bookDataSchema
+        .findOne({
+          _id: data.bookId,
+          "rating.ratedIds": userId,
+        })
+        .then((check) => {
+          if (check) {
+            // console.log(check);
+
+            bookDataSchema
+              .updateOne(
+                {
+                  _id: data.bookId,
+                  rating: { $elemMatch: { ratedIds: userId } },
+                },
+                {
+                  $pull: { rating: { ratedIds: userId } },
+                }
+              )
+              .then(() => {
+                bookDataSchema.updateOne(
+                  { _id: data.bookId },
+                  {
+                    $push: { rating: { rate: data.rate, ratedIds: userId } },
+                  }
+                )
+                .then((data) => {
+                  // console.log("***" + data);
+                  resolve()
+                })
+                .catch((err) => {
+                  console.log(err);
+                  reject()
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                reject()
+              });
+          } else {
+            console.log("no");
+            bookDataSchema
+              .updateOne(
+                { _id: data.bookId },
+                {
+                  $push: { rating: { rate: data.rate, ratedIds: userId } },
+                }
+              )
+              .then((data) => {
+                // console.log("***" + data);
+                resolve()
+              })
+              .catch((err) => {
+                console.log(err);
+                reject()
+              });
+          }
+        });
+      // .catch((err) => {});
+
       //
     });
   },
+  getRating:(data)=>{
+    return new Promise((resolve,reject)=>{
+      // console.log(data)
+      var sum=0;
+      var len=data.rating.length
+      //  console.log(len)
+      for(var i=0;i<len;i++){
+        sum=sum+data.rating[i].rate
+        
+      }
+      // console.log(sum)
+      var ratingofthebook=sum/len
+      // console.log(ratingofthebook)
+      ratingofthebook=Number.parseFloat(ratingofthebook).toFixed(1);
+      data.totalrating=ratingofthebook
+      resolve(data)
+    })
+  }
 };
 
 function commentCheckValidatorLevelOne(data, commentId, userId) {

@@ -95,7 +95,7 @@ router.get("/addBook", verifyLogin, (req, res) => {
 router.post("/booksAddToDb", verifyLogin, (req, res) => {
   var image = req.files.bookImage;
   var file = req.files.bookFile;
-  console.log(req.body); 
+  console.log(req.body);
   userHelpers.bookDataAdder(req.body, req.session.user._id).then((data) => {
     if (image && file) {
       image
@@ -170,13 +170,17 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
                       userHelper
                         .commentUserVerification(com, req.session.user._id)
                         .then((verifiedComm) => {
-                          console.log(verifiedComm);
+                          // console.log(verifiedComm);
+                          userHelper
+                            .getRating(chekedData)
+                            .then((afterRateData) => {
+                              res.render("user/bookView", {
+                                name: req.session.user.usename,
+                                details:afterRateData,
+                                review: verifiedComm,
+                              });
+                            });
 
-                          res.render("user/bookView", {
-                            name: req.session.user.usename,
-                            details: chekedData,
-                            review: verifiedComm,
-                          });
                           //       // console.log(com);
                         });
                     } else {
@@ -261,7 +265,7 @@ router.post("/likeCount", verifyLogin, (req, res) => {
     .catch(() => {});
 });
 router.post("/bookLiker", verifyLogin, (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   userHelper
     .bookLiker(req.body, req.session.user._id)
     .then(() => {
@@ -271,19 +275,23 @@ router.post("/bookLiker", verifyLogin, (req, res) => {
       res.send("err");
     });
 });
-router.post("/search",verifyLogin,(req,res)=>{
-  userHelper.search(req.body.searchKey).then((data)=>{
-    console.log(data[0]._id)
-    res.redirect("/bookField/" + data[0]._id);
-  }).catch((err)=>{
-   res.render("user/noBookFound",{key:req.body.searchKey})
-  })
-})
-router.post("/addRating",verifyLogin,(req,res)=>{
-  userHelper.addRate(req.body,req.session.user._id).then(()=>{
-
-  }).catch(()=>{
-    
-  })
-})
+router.post("/search", verifyLogin, (req, res) => {
+  userHelper
+    .search(req.body.searchKey)
+    .then((data) => {
+      // console.log(data[0]._id)
+      res.redirect("/bookField/" + data[0]._id);
+    })
+    .catch((err) => {
+      res.render("user/noBookFound", { key: req.body.searchKey });
+    });
+});
+router.post("/addRating", verifyLogin, (req, res) => {
+  userHelper
+    .addRate(req.body, req.session.user._id)
+    .then(() => {
+      res.json(true);
+    })
+    .catch(() => {});
+});
 module.exports = router;
