@@ -1,45 +1,71 @@
 <header>
-    <div class="top">
-        <div class="card-body" style="width: 20%;">
-            <form method="POST" id="check-form" action="/search">
-            <div class="input-group">
-                <input class="form-control" name="searchKey" id="searchKey" type="text" placeholder="Enter Book Name..." />
-                <span class="input-group-append" ><button class="btn btn-secondary" type="submit">Go!</button></span>
-            </div>
-            </form>
-            <nav id="navbar" class="navbar">
-            <ul>
-            <li class="dropdown"><a href="#"><i class="fas fa-ellipsis-v"></i></a>
+  <div class="top">
+    <div class="card-body" style="width: 20%;">
+      <form method="POST" id="check-form" action="/search">
+        <div class="input-group">
+          <input class="form-control" name="searchKey" id="searchKey" type="text" placeholder="Enter Book Name..." />
+          <span class="input-group-append" ><button class="btn btn-secondary" type="submit">Go!</button></span>
+        </div>
+      </form>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li class="dropdown"><a href="#"><i class="fas fa-ellipsis-v"></i></a>
             <ul>
               <li><a href="/home">Home</a></li>
               <li><a href="/book-table">My Books</a></li>
-              {{!-- <li><a href="#">Review</a></li> --}}
               <li><a href="/logOut">Logout</a></li>
             </ul>
           </li>
-            </ul>
-            </nav>
+        </ul>
+      </nav>
     </div>
-
     <div class="user pl-3 pb-3">
-    <h5><i class="fas fa-user"></i>  {{name}}</h5>
+      <h5><i class="fas fa-user"></i>  {{name}}</h5>
+    </div>
   </div>
-</div>
 </header>
 <section id="home">
-    <div class="row justify-content-center" style="width: 100%;">
-      <div class="col-xl-7 col-lg-9 text-center" style="z-index: 1;">
-        <h1 id="h1">Reading corner !!</h1>
-        <h2 id="h2"> “Once you learn to read, you will be forever free.”<br> – Frederick Douglass.</h2>
-      </div>
+  <div class="sidenav">
+  <a class="active">Categories</a>
+  <a href="">Adventure</a>
+  <a href="">Art</a>
+  <a href="">Children</a>
+  <a href="">Contemparary</a>
+  <a href="">Cooking</a>
+  <a href="">Devolopment</a>
+  <a href="">Dystopian</a>
+  <a href="">Fantasy</a>
+  <a href="">Families & Relationship</a>
+  <a href="">Guide</a>
+  <a href="">Health</a>
+  <a href="">History</a>
+  <a href="">Horror</a>
+  <a href="">Historical-Fiction</a>
+  <a href="">Humor</a>
+  <a href="">Motivational</a>
+  <a href="">Mystery</a>
+  <a href="">Memoir</a>
+  <a href="">Paranormal</a>
+  <a href="">Personal</a>
+  <a href="">Romance</a>
+  <a href="">Science-Fiction</a>
+  <a href="">Thriller</a>
+  <a href="">Travel</a>
+
+</div>
+  <div class="row justify-content-center" style="width: 100%;">
+    <div class="col-md-4 text-center" style="z-index: 1;">
+      <h1 id="h1">Reading corner !!</h1>
+      <h2 id="h2"> “Once you learn to read, you will be forever free.”<br> – Frederick Douglass.</h2>
     </div>
-  </section>
-  <section id="books" class="d-flex align-items-center" style="margin-bottom: 200px;">
-    <div class="container position-relative">
-      <div class="row card-boxes">
-        {{#each books}}
-        {{#each this}}
-        {{#if this.ibnNumber}}
+  </div>
+</section>
+<section id="books" class="d-flex align-items-center" style="margin-bottom: 200px;">
+  <div class="container position-relative">
+    <div class="row card-boxes">
+      {{#each books}}
+      {{#each this}}
+      {{#if this.ibnNumber}}
         <div class="col-md-4">
           <div class="card-box mt-4">
             <img src="/cover-images/{{this._id}}.jpg" alt="err" style="width: 16rem; height:20rem"/>
@@ -48,14 +74,14 @@
             <a href="/bookField/{{this._id}}"><button class="button mt-2"><span>View</span></button></a>
           </div>
         </div>
-        {{/if}}
-        {{/each}}
-        {{/each}}
-      </div>
+      {{/if}}
+      {{/each}}
+      {{/each}}
     </div>
-  </section>
-  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-  <script>
+  </div>
+</section>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script>
  $(document).ready(function() {
     $("#check-form").validate({
 rules:{
@@ -70,7 +96,13 @@ rules:{
     })
        })
 </script>
-
+<!-- rating.js file -->
+<script>
+// Rating Initialization
+$(document).ready(function() {
+  $('#rateMe2').mdbRate();
+});
+</script>
 <style>
 
   .user{
@@ -186,4 +218,24 @@ rules:{
     color: #124265;
     z-index: 2;
   }
+.sidenav {
+  width: 130px;
+  position:absolute;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.8);
+  overflow-x: hidden;
+  padding: 8px 0;
+}
+
+.sidenav a {
+  display: block;
+  color: #124265;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidenav a:hover {
+  color: black;
+}
+
 </style>

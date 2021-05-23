@@ -1,5 +1,5 @@
 <section class="pt-5 pl-5">
-  <div class="row">
+  <div class="row" style="width: 100%;">
     <div class="col">
       {{#each details}}
       {{#if this.ibnNumber}}
@@ -26,10 +26,7 @@
             <th scope="row">Language</th>
             <td>{{this.language}}</td>
           </tr>
-          <tr>
-            <th scope="row">Purchase Link</th>
-            <th><a class="btn btn-primary" href={{this.purchaseLink}} role="button">Click Here</a></th>
-          </tr>
+
           <tr>
             <th scope="row">Year Of Publication</th>
             <td>{{this.yearOfPublication}}</td>
@@ -43,8 +40,12 @@
             <td>{{this.description}}</td>
           </tr>
           <tr>
-            <th scope="row"><a href="/download/{{this._id}}" class="btn btn-success">Download</a></th>
-            <td>{{#if this.likeCheck}}
+            <th scope="row">Purchase Link</th>
+            <th><a class="btn btn-primary" href={{this.purchaseLink}} role="button">Click Here</a></th>
+          </tr>
+          <tr>
+            <th scope="row" style="padding-top: 2rem;">
+            {{#if this.likeCheck}}
               <svg onclick="dislikeBook('{{this._id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
                 <path
@@ -59,24 +60,29 @@
               </svg>
                 
               {{/if}}
+                      {{#if this.likeCheck}}
+        
+        {{/if}}
+     
+        <p id="likes" style="padding-top: 1rem;"><b>{{this.likeNumber}}</b>  Likes</p>
+            </th>
+            <td style="padding-top: 2rem;">
+          <form method="post" action="/addCommentToTheDb" style="padding-left: 5rem;">
+          <input type="text" name="comment" placeholder="Write your comment about this page" style="width: 300px;">
+          <input type="hidden" name="bookId" value="{{this._id}}">
+          <button type="submit" class="btn btn-success">Comment</button>
+        </form>
             </td>
           </tr>
         </tbody>
       </table>
+      <div class="col-md-1 ml-auto">
+      <a href="/download/{{this._id}}"><button class="btn btn-danger"><i class="fas fa-download"></i></button></a>
+      </div>
 
-      
-      
       <div class="col">
-        {{#if this.likeCheck}}
-        
-        {{/if}}
-     
-        <p id="likes"><b>{{this.likeNumber}} Prosons Liked This Book</b></p>
-        <form method="post" action="/addCommentToTheDb">
-          <input type="text" name="comment" placeholder="Write your comment about this page">
-          <input type="hidden" name="bookId" value="{{this._id}}">
-          <button type="submit" class="btn btn-success">Comment</button>
-        </form>
+
+
         <div class="col">
             <p>{{this.comment}}</p>
         </div>
@@ -90,6 +96,7 @@
       {{/each}}
     </div>
     <div class="col">
+      <div style="width:550px; margin-left:auto">
       {{#each details}}
       
         {{#if this.ibnNumber}}
@@ -101,6 +108,7 @@
             />
           {{/if}}
       {{/each}}
+</div>
       <br>
       <br>
       <h3>Comments</h3>
