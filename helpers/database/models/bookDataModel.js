@@ -38,6 +38,9 @@ const booksData = new mongoose.Schema(
       type: String,
       require: true,
     },
+    rate:{type:Number,default:0},
+    ratedIds:[{type: mongoose.Types.ObjectId}],
+    
     likeNumber: { type: Number, default: 0, minimum: 0 },
     likedId: [
       {

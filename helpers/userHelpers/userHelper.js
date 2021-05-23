@@ -224,8 +224,8 @@ module.exports = {
           // console.log(data.commentData);
           commentCheckValidatorLevelOne(data.commentData, req.commentId, userId)
             .then((check) => {
-              console.log(check);
-              console.log("comment exist");
+              // console.log(check);
+              console.log("like exist");
               if (req.count == -1) {
                 commentDataSchema
                   .updateOne(
@@ -249,8 +249,8 @@ module.exports = {
               }
             })
             .catch((check) => {
-              console.log(check);
-              console.log("comment not exist");
+              // console.log(check);
+              console.log("like not exist");
               if (req.count == 1) {
                 commentDataSchema
                   .updateOne(
@@ -331,7 +331,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       var len = data.likedId.length;
       for (var i = 0; i < len; i++) {
-        if (data.likedId[i].user == userId) data.likeCheck = true;
+        if (data.likedId[i].user == userId) {
+          data.likeCheck = true;
+        }
       }
       // console.log(data);
       resolve(data);
@@ -351,30 +353,73 @@ module.exports = {
   },
   commentUserVerification: (data, userId) => {
     return new Promise((resolve, reject) => {
-      var len = data[0].likedIds.length;
-      console.log(len);
-      for (var i = 0; i < len; i++) {
-        if (data[0].likedIds[i].ID == userId) {
-          data[0].commentUserVerification = true;
+      var len2 = data[0].likedIds.length;
+      var len1 = data.length;
+      console.log("*" + data);
+      for (var j = 0; j < len1; j++) {
+        for (var i = 0; i < len2; i++) {
+          if (data[j].likedIds[i]) {
+            if (data[j].likedIds[i].ID == userId) {
+              data[j].commentUserVerification = true;
+            }
+          }
+          // console.log("#"+data[0].likedIds[i].ID)
         }
       }
       resolve(data);
     });
   },
   search: (key) => {
-    return new Promise(async(resolve, reject) => {
-      console.log(key)
-    await  bookDataSchema
-        .find({ bookName:key})
+    return new Promise(async (resolve, reject) => {
+      // console.log(key)
+      await bookDataSchema
+        .find({ bookName: key })
         .then((data) => {
-         
           // console.log(data+"k")
           resolve(data);
         })
         .catch((err) => {
-          console.log(err+"p")
+          console.log(err + "p");
           reject(err);
         });
+    });
+  },
+  addRate: (data, userId) => {
+    return new Promise(async (resolve, reject) => {
+ 
+      bookDataSchema.findOne({ratedIds:userId}).then((check)=>{
+        if(check){
+        data.rate=data.rate*(-1)
+        
+        bookDataSchema.updateOne(
+            { _id: data.bookId },
+            {
+              $inc: { rate: data.rate },
+              
+            }
+          ).then((data)=>{
+            console.log("$$$"+data)
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }else{
+          bookDataSchema.updateOne(
+            { _id: data.bookId },
+            {
+              $inc: { rate: data.rate },
+              $push: { ratedIds: userId },
+            }
+          ).then((data)=>{
+            console.log("***"+data)
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }
+      }).catch((err)=>{
+       
+      })
+    
+      //
     });
   },
 };
