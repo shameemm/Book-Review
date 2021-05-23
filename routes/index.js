@@ -50,12 +50,14 @@ router.post("/signIn", async (req, res) => {
     .catch((err) => {
       // console.log("%%%%");
       req.session.userErr = true;
-      res.redirect("/");
+      // res.redirect("/");
 
       if (err) {
         console.log("pass err");
+        res.render("user/signIn",{passErr:true});
       } else {
         console.log("nno user");
+        res.render("user/signIn",{mailErr:true});
       }
     });
 });
@@ -70,7 +72,7 @@ router.post("/signUp", (req, res) => {
     })
     .catch(() => {
       console.log("signup fail");
-      res.redirect("/signUpPage");
+      res.render("user/signUp",{loginErr:true});
       req.session.userErr = true;
     });
 });
@@ -165,7 +167,7 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
                       userHelper
                         .commentUserVerification(com, req.session.user._id)
                         .then((verifiedComm) => {
-                          // console.log(verifiedComm);
+                          console.log(verifiedComm);
                           userHelper
                             .getRating(chekedData)
                             .then((afterRateData) => {

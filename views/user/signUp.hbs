@@ -29,6 +29,11 @@
           />
         </div>
         <div class="form-group">
+           {{#if loginErr}}
+            <div class="alert alert-danger" role="alert">
+              <p class="error">mail id already exist</p>
+            </div>
+            {{/if}}
           <label>Email ID</label>
           <input
             type="email"

@@ -20,8 +20,8 @@ module.exports = {
           .then((data) => {
             resolve(data);
           })
-          .catch((err) => {
-            reject(err);
+          .catch(() => {
+            reject();
           });
       }
     });

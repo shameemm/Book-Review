@@ -12,12 +12,22 @@
                     <form action="/signIn" id="login" method="POST">
                         <div class="form-row">
                             <div class="col-lg-7">
+                                {{#if mailErr}}
+                                  <div class="alert alert-danger" role="alert">
+                                <p class="error">this mail id not registered</p>
+                                  </div>
+                                   {{/if}}
                                 <input type="email" name="email" class="form-control my-3 p-4" placeholder="Email">
                                
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
+                                 {{#if passErr}}
+                                  <div class="alert alert-danger" role="alert">
+                                <p class="error">incorrect password</p>
+                                  </div>
+                                   {{/if}}
                                 <input type="password" name="password" class="form-control my-3 p-4" placeholder="Password">
                             </div>
                         </div>

@@ -353,14 +353,19 @@ module.exports = {
   },
   commentUserVerification: (data, userId) => {
     return new Promise((resolve, reject) => {
-      var len2 = data[0].likedIds.length;
+      
       var len1 = data.length;
       // console.log("*" + data);
       for (var j = 0; j < len1; j++) {
+        var len2 = data[j].likedIds.length;
         for (var i = 0; i < len2; i++) {
+          // console.log(data[j].likedIds[i])
           if (data[j].likedIds[i]) {
+           
             if (data[j].likedIds[i].ID == userId) {
               data[j].commentUserVerification = true;
+              // console.log("........................")
+              break;
             }
           }
           // console.log("#"+data[0].likedIds[i].ID)
