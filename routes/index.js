@@ -133,17 +133,12 @@ router.get("/deleteBook/:id", verifyLogin, (req, res) => {
       res.send("some thing went wrong");
     });
 });
-// router.get("/toComment/:id", verifyLogin, (req, res) => {
-//   res.render("user/addComment", {
-//     bookId: req.params.id,
-//     name: req.session.user.username,
-//   });
-// });
+
 router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
   userHelpers
     .addComment(req.body, req.session.user._id)
     .then(() => {
-      res.redirect("/bookField/" + req.body.bookId);
+      res.json(true)
     })
     .catch(() => {
       res.send("comment add fails");
@@ -189,14 +184,7 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
                         name: req.session.user.username,
                       });
                     }
-                    // if (com) {
-                    //   res.render("user/bookView", {
-                    //     details: chekedData,
-                    //     review: com,
-                    //     name: req.session.user.usename,
-                    //   });
-                    //   // console.log(com);
-                    // }
+                   
                   });
               } else {
                 res.render("user/bookView", {
@@ -292,6 +280,6 @@ router.post("/addRating", verifyLogin, (req, res) => {
     .then(() => {
       res.json(true);
     })
-    .catch(() => {});
+    .catch(() => {res.send("something went wrong")});
 });
 module.exports = router;

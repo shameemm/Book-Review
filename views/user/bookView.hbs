@@ -86,11 +86,11 @@
       <div class="col">
        
         <p id="likes"><b>{{this.likeNumber}} Prosons Liked This Book</b></p>
-        <form method="post" action="/addCommentToTheDb">
-          <input type="text" name="comment" placeholder="Write your comment about this page">
-          <input type="hidden" name="bookId" value="{{this._id}}">
-          <button type="submit" class="btn btn-success">Comment</button>
-        </form>
+        {{!-- <form method="post" action="/addCommentToTheDb"> --}}
+          <input type="text" id="comment" name="comment" placeholder="Write your comment about this page">
+          <input type="hidden" id="bookId" name="bookId" value="{{this._id}}">
+          <button type="button" id="commentBt" onclick="addComment" class="btn btn-success">Comment</button>
+        {{!-- </form> --}}
         <div class="col">
             <p>{{this.comment}}</p>
         </div>
@@ -190,11 +190,26 @@
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+$("#commentBt").click(function(){
+  var comment=$("#comment").val();
+ var bookId= $("#bookId").val();
+  $.ajax({
+      url: "/addCommentToTheDb",
+      method: 'post',
 
+      data: {
+       comment: comment,
+        bookId: bookId
+
+      },
+      success: () => { location.reload() }
+    })
+})
  
 $("input[type='radio']").click(function(){
 var sim = $("input[type='radio']:checked").val();
 var bookId=$("input[type='hidden']").val();
+
 //alert(bookId);
 //alert(sim)
 
