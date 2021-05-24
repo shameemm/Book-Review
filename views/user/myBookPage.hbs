@@ -1,6 +1,5 @@
-
 <section>
-  <div class="row pr-5 pt-3 pb-3">
+  <div class="row pr-5 pt-3 pb-3" style="width: 100%;">
   <a class="btn btn-success ml-auto" href="/addBook">Add Book</a>
   </div>
   <table class="table table-striped">
@@ -23,43 +22,32 @@
     </thead>
     <tbody>
       {{#each books}}
-        {{#each this}}
-          {{#if this.ibnNumber}}
-            <tr>
+      {{#each this}}
+      {{#if this.ibnNumber}}
+      <tr>
 
-              <td>{{this.ibnNumber}}</td>
-              <td>{{this.bookName}}</td>
-              <td>{{this.authorName}}</td>
-              <td>{{this.language}}</td>
-              <td>{{this.description}}</td>
-              <td>{{this.purchaseLink}}</td>
-              <td>{{this.yearOfPublication}}</td>
-              <td>{{this.Genre}}</td>
-              <td><img
-                  src="/cover-images/{{this._id}}.jpg"
-                  alt="err"
-                  srcset=""
-                  style="height: 100px;width:100px"
-                /></td>
-              <td><a
-                  href="/deleteBook/{{this._id}}"
-                  class="btn btn-danger"
-                >delete</a></td>
-              
-              <td><a
-                  href="/bookField/{{this._id}}"
-                  class="btn btn-primary"
-                >view</a></td>
-              
-               
+        <td>{{this.ibnNumber}}</td>
+        <td>{{this.bookName}}</td>
+        <td>{{this.authorName}}</td>
+        <td>{{this.language}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.purchaseLink}}</td>
+        <td>{{this.yearOfPublication}}</td>
+        <td>{{this.Genre}}</td>
+        <td><img src="/cover-images/{{this._id}}.jpg" alt="err" srcset="" style="height: 100px;width:100px" /></td>
+        <td><a href="/deleteBook/{{this._id}}" class="btn btn-danger">delete</a></td>
 
-                <td>{{this.likes}}</td>
+        <td><a href="/bookField/{{this._id}}" class="btn btn-primary">view</a></td>
 
-                
 
-            </tr>
-          {{/if}}
-        {{/each}}
+
+        <td>{{this.likes}}</td>
+
+
+
+      </tr>
+      {{/if}}
+      {{/each}}
       {{/each}}
 
     </tbody>
@@ -67,32 +55,32 @@
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  var likeBook=(bookId)=>{
- 
+  var likeBook = (bookId) => {
+
     $.ajax({
-       url:"/bookLiker",
-      method:'post',
-     
-      data:{
-        count:1,
-        bookId:bookId
-    
-        },
-      success:()=>{location.reload() }
+      url: "/bookLiker",
+      method: 'post',
+
+      data: {
+        count: 1,
+        bookId: bookId
+
+      },
+      success: () => { location.reload() }
     })
   }
-  var dislikeBook=(bookId)=>{
- 
+  var dislikeBook = (bookId) => {
+
     $.ajax({
-       url:"/bookLiker",
-      method:'post',
-     
-      data:{
-        count:-1,
-        bookId:bookId
-    
-        },
-      success:()=>{location.reload() }
+      url: "/bookLiker",
+      method: 'post',
+
+      data: {
+        count: -1,
+        bookId: bookId
+
+      },
+      success: () => { location.reload() }
     })
   }
-  </script>
+</script>

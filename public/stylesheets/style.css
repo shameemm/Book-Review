@@ -4,12 +4,13 @@ body{
   
   body:before {
     content: "";
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.5);
     position: fixed;
     bottom: 0;
     top: 0;
     left: 0;
     right: 0;
+    z-index: -1;
   }
   
   #h1 {
@@ -44,7 +45,7 @@ body{
     position: relative;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 0 29px 0 rgba(18, 66, 101, 0.08);
+    box-shadow: 0 0 29px 0 rgba(74, 76, 77, 0.2);
     border-radius: 8px;
     z-index: 1;
   }
@@ -165,6 +166,7 @@ body{
     border: none;
     cursor: pointer;
 }
+
 /* ----------------------------------------------------------------rating---------- */
 
 .rating {

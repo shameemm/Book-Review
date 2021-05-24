@@ -1,6 +1,7 @@
 <section class="pt-5 pl-5">
-  <div class="row">
+  <div class="row" style="width: 100%;">
     <div class="col">
+      <a href="/home" class="btn btn-secondary"><i class="fas fa-chevron-left"></i></a>
       {{#each details}}
       {{#if this.ibnNumber}}
       <table class="table table-borderless">
@@ -26,10 +27,7 @@
             <th scope="row">Language</th>
             <td>{{this.language}}</td>
           </tr>
-          <tr>
-            <th scope="row">Purchase Link</th>
-            <th><a class="btn btn-primary" href={{this.purchaseLink}} role="button">Click Here</a></th>
-          </tr>
+
           <tr>
             <th scope="row">Year Of Publication</th>
             <td>{{this.yearOfPublication}}</td>
@@ -42,26 +40,16 @@
             <th scope="row">Description</th>
             <td>{{this.description}}</td>
           </tr>
-          <tr scope="row">
-            <th>rate</th>
-            <td><div class="container d-flex justify-content-center mt-100">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body text-center"> <span class="myratings">{{this.totalrating}}</span>
-                    <h4 class="mt-1">pls Write the ratingof the book</h4>
-                    <fieldset class="rating"> <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label> <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label> <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label> <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label> <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label> <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label> <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label> <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label> <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label> <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label> <input type="radio" class="reset-option" name="rating" value="reset" /> </fieldset>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-     </td>
-          </tr>
           <tr>
-            <th scope="row"><a href="/download/{{this._id}}" class="btn btn-success">Download</a></th>
+            <th scope="row">Purchase Link</th>
+            <th><a class="btn btn-primary" href={{this.purchaseLink}} role="button">Click Here</a></th>
+          </tr>
+                  </tbody>
+      </table>
+
+
            
-            <td>{{#if this.likeCheck}}
+            {{#if this.likeCheck}}
               <svg onclick="dislikeBook('{{this._id}}')" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
                 <path
@@ -74,12 +62,6 @@
                 <path
                   d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
               </svg>
-                
-              {{/if}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
 
       
       
@@ -94,16 +76,14 @@
         <div class="col">
             <p>{{this.comment}}</p>
         </div>
-        
 
 
-
-      </div>
 
       {{/if}}
       {{/each}}
     </div>
     <div class="col">
+      <div style="width: 300px; margin:auto">
       {{#each details}}
       
         {{#if this.ibnNumber}}
@@ -115,6 +95,13 @@
             />
           {{/if}}
       {{/each}}
+      </div>
+                  <div class="card mt-3" style="margin: auto;"> 
+                <div class="card-body text-center"> <span class="myratings">{{this.totalrating}}</span>
+                    <h4 class="mt-1">Rate this Book</h4>
+                    <fieldset class="rating"> <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label> <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label> <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label> <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label> <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label> <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label> <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label> <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label> <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label> <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label> <input type="radio" class="reset-option" name="rating" value="reset" /> </fieldset>
+                </div>
+            </div>
       <br>
       <br>
       <h3>Comments</h3>
@@ -184,6 +171,13 @@
       {{/if}}
       {{/each}}
       {{/each}}
+<div style="width: 50%; margin:auto">
+        <form method="post" action="/addCommentToTheDb">
+          <input type="text" name="comment" placeholder="Write your comment about this page">
+          <input type="hidden" name="bookId" value="{{this._id}}">
+          <button type="submit" class="btn btn-success">Comment</button>
+        </form>
+        </div>
     </div>
   </div>
 

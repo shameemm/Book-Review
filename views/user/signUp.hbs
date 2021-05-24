@@ -1,5 +1,3 @@
-
-
 <div class="sidenav">
   <div class="login-main-text">
     <h2>Signup<br /> Join with us</h2>
@@ -9,24 +7,14 @@
 <div class="main">
   <div class="col-md-6 col-sm-12">
     <div class="login-form">
-      <form action="/signUp" id="signUp" method="POST" >
+      <form action="/signUp" id="signUp" method="POST">
         <div class="form-group">
           <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            class="form-control"
-            placeholder="Your Name"
-          />
+          <input type="text" name="name" class="form-control" placeholder="Your Name" />
         </div>
         <div class="form-group">
           <label>Mobile Number</label>
-          <input
-            type="text"
-            name="mobile"
-            class="form-control"
-            placeholder="Mobile"
-          />
+          <input type="text" name="mobile" class="form-control" placeholder="Mobile" />
         </div>
         <div class="form-group">
            {{#if loginErr}}
@@ -35,26 +23,16 @@
             </div>
             {{/if}}
           <label>Email ID</label>
-          <input
-            type="email"
-            name="email"
-            class="form-control"
-            placeholder="Email"
-          />
+          <input type="email" name="email" class="form-control" placeholder="Email" />
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            class="form-control"
-            placeholder="Password"
-          />
+          <input type="password" name="password" class="form-control" placeholder="Password" />
         </div>
 
         <button type="submit" class="btn btn-black">Join Us</button>
         <br>
-        <p class="pt-3" >Already have <a style="color: black;" href="/">account??</a></p>
+        <p class="pt-3">Already have <a style="color: black;" href="/">account??</a></p>
 
       </form>
     </div>
@@ -62,50 +40,117 @@
 </div>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script>
-    $("#signUp").validate({
-        rules:{
-            email:{
-                required:true,
-                email:true
-            },
-            name:{
-              required:true
-            },
-            mobile:{
-              required:true,
-              number:true,
-              minlength:10,
-              maxlength:12
-            },
-            password:{
-                required:true,
-                minlength:7
-            },
-        },
-        messages:{
-            email:"<b>*pls enter a valied email</b>",
-             password:"<b>*minimum length 7 required</b>",
-             name:"<b>*pls enter the name</b>",
-             mobile:"<b>*pls enter a valied mobile number</b>",
-        }
-        
-        
-    })
-   
+  $("#signUp").validate({
+    rules: {
+      email: {
+        required: true,
+        email: true
+      },
+      name: {
+        required: true
+      },
+      mobile: {
+        required: true,
+        number: true,
+        minlength: 10,
+        maxlength: 12
+      },
+      password: {
+        required: true,
+        minlength: 7
+      },
+    },
+    messages: {
+      email: "<b>*pls enter a valied email</b>",
+      password: "<b>*minimum length 7 required</b>",
+      name: "<b>*pls enter the name</b>",
+      mobile: "<b>*pls enter a valied mobile number</b>",
+    }
+
+
+  })
+
 </script>
 <style>
-  body { font-family: "Lato", sans-serif; } .main-head{ height: 150px;
-  background: #FFF; } .sidenav { height: 100%; background-color: #000;
-  overflow-x: hidden; padding-top: 20px; } .main { padding: 0px 10px; } @media
-  screen and (max-height: 450px) { .sidenav {padding-top: 15px;} } @media screen
-  and (max-width: 450px) { .login-form{ margin-top: 10%; } .register-form{
-  margin-top: 10%; } } @media screen and (min-width: 768px){ .main{ margin-left:
-  40%; } .sidenav{ width: 40%; position: fixed; z-index: 1; top: 0; left: 0; }
-  .login-form{ margin-top: 40%; } .register-form{ margin-top: 20%; } }
-  .login-main-text{ margin-top: 20%; padding: 60px; color: #fff; }
-  .login-main-text h2{ font-weight: 300; } .btn-black{ background-color: #000
-  !important; color: #fff; }a {color: antiquewhite; text-decoration: none;
-  background-color: transparent;}
+  body {
+    font-family: "Lato", sans-serif;
+  }
+
+  .main-head {
+    height: 150px;
+    background: #FFF;
+  }
+
+  .sidenav {
+    height: 100%;
+    background-color: #000;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  .main {
+    padding: 0px 10px;
+  }
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    .login-form {
+      margin-top: 10%;
+    }
+
+    .register-form {
+      margin-top: 10%;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .main {
+      margin-left:
+        40%;
+    }
+
+    .sidenav {
+      width: 40%;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+    }
+
+    .login-form {
+      margin-top: 40%;
+    }
+
+    .register-form {
+      margin-top: 20%;
+    }
+  }
+
+  .login-main-text {
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+  }
+
+  .login-main-text h2 {
+    font-weight: 300;
+  }
+
+  .btn-black {
+    background-color: #000 !important;
+    color: #fff;
+  }
+
+  a {
+    color: antiquewhite;
+    text-decoration: none;
+    background-color: transparent;
+  }
 </style>
 
 <script src="/javascripts/script.js"></script>
