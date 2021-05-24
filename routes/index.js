@@ -3,6 +3,7 @@ var router = express.Router();
 var userLogger = require("../helpers/userHelpers/userLog/userLog");
 var userHelpers = require("../helpers/userHelpers/userHelper");
 const userHelper = require("../helpers/userHelpers/userHelper");
+const adminHelper=require("../helpers/admin/adminHelper")
 
 const verifyLogin = (req, res, next) => {
   if (req.session.userLogin) {
@@ -124,12 +125,12 @@ router.get("/logOut", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
-router.get("/deleteBook/:id", verifyLogin, (req, res) => {
-  console.log(req.params.id);
+router.post("/deleteBook", verifyLogin, (req, res) => {
+  console.log(req.body.bookId);
   userHelpers
-    .deleteBook(req.params.id)
+    .deleteBook(req.body.bookId)
     .then(() => {
-      res.redirect("/home");
+      res.json(true)
     })
     .catch((err) => {
       res.send("some thing went wrong");
@@ -284,4 +285,31 @@ router.post("/addRating", verifyLogin, (req, res) => {
     })
     .catch(() => {res.send("something went wrong")});
 });
+router.get("/category/:name",verifyLogin,(req,res)=>{
+  // console.log(req.params.name)
+  userHelper.getCategoryBook(req.params.name).then((data)=>{
+    res.render("user/home", {
+      name: req.session.user.username,
+      books: data,
+    });
+  }).catch((err)=>{
+
+  })
+})
+//-------------------------------admin--------------------------------
+router.get("/admin",(req,res)=>{
+  res.render("admin/adminLogin")
+})
+router.post("/adminSignIn",(req,res)=>{
+  adminHelper.adminLogin(req.body).then(()=>{
+    res.render("admin/adminView")
+
+  }).catch((err)=>{
+  if(err){
+    res.render("admin/adminLogin",{passErr:true})
+  }else{
+    res.render("admin/adminLogin",{mailErr:true})
+  }
+  })
+})
 module.exports = router;

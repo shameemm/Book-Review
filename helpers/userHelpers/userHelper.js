@@ -471,6 +471,15 @@ module.exports = {
       data.totalrating=ratingofthebook
       resolve(data)
     })
+  },
+  getCategoryBook:(key)=>{
+    return new Promise(async(resolve,reject)=>{
+      bookDataSchema.find({Genre:key}).then((data)=>{
+        resolve(data)
+      }).catch((err)=>{
+        reject()
+      })
+    })
   }
 };
 

@@ -3,18 +3,18 @@
         <div class="container">
             <div class="row no-gutters ">
                 <div class="col-lg-5 ">
-                    <img src="https://image.freepik.com/free-photo/books-randomly-stacked-shelf_23-2147846041.jpg"
-                        class="" alt="">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAKHaWmfJvKhi75Lm9lTFp9miy38CQtvGv_w&usqp=CAU"
+                        class="" alt="picture can't reander there should be an error occure ">
                 </div>
                 <div class="col-lg-7 px-5 pt-5 pb-5">
                     <h1 class="font-weight-bold py-3">BookView</h1>
-                    <h3>User Login</h3>
-                    <form action="/signIn" id="login" method="POST">
+                    <h3>Admin Login</h3>
+                    <form action="/adminSignIn" id="login" method="POST">
                         <div class="form-row">
                             <div class="col-lg-7">
                                 {{#if mailErr}}
                                   <div class="alert alert-danger" role="alert">
-                                <p class="error">this mail id not registered</p>
+                                <p class="error">this mailId is not verified </p>
                                   </div>
                                    {{/if}}
                                 <input type="email" name="email" class="form-control my-3 p-4" placeholder="Email">
@@ -33,14 +33,12 @@
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7 ">
-                                <button type="submit" class="btn1 mt-3 mb-5">Login</button>
+                                <button type="submit" class="btn1 mt-3 mb-5">Admin Login</button>
                             </div>
                         </div>
                         <div>
 
-                        </div>
-                        New User??<a href="/signUpPage">Signup</a>
-                        <br>
+                        
                     </form>
 
                 </div>

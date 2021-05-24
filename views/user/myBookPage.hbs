@@ -35,7 +35,7 @@
         <td>{{this.yearOfPublication}}</td>
         <td>{{this.Genre}}</td>
         <td><img src="/cover-images/{{this._id}}.jpg" alt="err" srcset="" style="height: 100px;width:100px" /></td>
-        <td><a href="/deleteBook/{{this._id}}" class="btn btn-danger">delete</a></td>
+        <td><button onclick="deleteBook('{{this._id}}')" class="btn btn-danger">delete</button></td> href="/deleteBook/{{this._id}}" 
 
         <td><a href="/bookField/{{this._id}}" class="btn btn-primary">view</a></td>
 
@@ -55,32 +55,19 @@
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  var likeBook = (bookId) => {
+  var deleteBook = (bookId) => {
 
     $.ajax({
-      url: "/bookLiker",
+      url: "/deleteBook",
       method: 'post',
 
       data: {
-        count: 1,
+        
         bookId: bookId
 
       },
       success: () => { location.reload() }
     })
   }
-  var dislikeBook = (bookId) => {
-
-    $.ajax({
-      url: "/bookLiker",
-      method: 'post',
-
-      data: {
-        count: -1,
-        bookId: bookId
-
-      },
-      success: () => { location.reload() }
-    })
-  }
+ 
 </script>
