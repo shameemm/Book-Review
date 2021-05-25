@@ -17,11 +17,11 @@ Node.js v12.0.0 or newer
 NodeJS - 14.17.0
 ## How to configure
 Open the folder in vscode
-Open new terminal
-Enter npm install
-Enter npm start
+# Open new terminal
+# Enter npm install
+ #Enter npm start
 
 ## How to Run
-npm start
-Open the browser
-enter locahost:3000
+# npm start
+# Open the browser
+# enter locahost:3000
