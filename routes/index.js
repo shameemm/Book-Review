@@ -3,7 +3,7 @@ var router = express.Router();
 var userLogger = require("../helpers/userHelpers/userLog/userLog");
 var userHelpers = require("../helpers/userHelpers/userHelper");
 const userHelper = require("../helpers/userHelpers/userHelper");
-const adminHelper=require("../helpers/admin/adminHelper")
+const adminHelper = require("../helpers/admin/adminHelper");
 
 const verifyLogin = (req, res, next) => {
   if (req.session.userLogin) {
@@ -55,10 +55,10 @@ router.post("/signIn", async (req, res) => {
 
       if (err) {
         console.log("pass err");
-        res.render("user/signIn",{passErr:true});
+        res.render("user/signIn", { passErr: true });
       } else {
         console.log("nno user");
-        res.render("user/signIn",{mailErr:true});
+        res.render("user/signIn", { mailErr: true });
       }
     });
 });
@@ -73,7 +73,7 @@ router.post("/signUp", (req, res) => {
     })
     .catch(() => {
       console.log("signup fail");
-      res.render("user/signUp",{loginErr:true});
+      res.render("user/signUp", { loginErr: true });
       req.session.userErr = true;
     });
 });
@@ -130,7 +130,7 @@ router.post("/deleteBook", verifyLogin, (req, res) => {
   userHelpers
     .deleteBook(req.body.bookId)
     .then(() => {
-      res.json(true)
+      res.json(true);
     })
     .catch((err) => {
       res.send("some thing went wrong");
@@ -141,7 +141,7 @@ router.post("/addCommentToTheDb", verifyLogin, (req, res) => {
   userHelpers
     .addComment(req.body, req.session.user._id)
     .then(() => {
-      res.json(true)
+      res.json(true);
     })
     .catch(() => {
       res.send("comment add fails");
@@ -172,9 +172,10 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
                           userHelper
                             .getRating(chekedData)
                             .then((afterRateData) => {
+                              console.log(afterRateData);
                               res.render("user/bookView", {
                                 name: req.session.user.usename,
-                                details:afterRateData,
+                                details: afterRateData,
                                 review: verifiedComm,
                               });
                             });
@@ -182,24 +183,29 @@ router.get("/bookField/:id", verifyLogin, (req, res) => {
                           //       // console.log(com);
                         });
                     } else {
-                      res.render("user/bookView", {
-                        details: data,
-                        name: req.session.user.username,
+                      userHelper.getRating(chekedData).then((afterRateData) => {
+                        res.render("user/bookView", {
+                          details: afterRateData,
+                          name: req.session.user.username,
+                        });
                       });
                     }
-                   
                   });
               } else {
-                res.render("user/bookView", {
-                  details: data,
-                  name: req.session.user.username,
+                userHelper.getRating(chekedData).then((afterRateData) => {
+                  res.render("user/bookView", {
+                    details: afterRateData,
+                    name: req.session.user.username,
+                  });
                 });
               }
             })
             .catch((err) => {
-              res.render("user/bookView", {
-                details: data,
-                name: req.session.user.username,
+              userHelper.getRating(chekedData).then((afterRateData) => {
+                res.render("user/bookView", {
+                  details: afterRateData,
+                  name: req.session.user.username,
+                });
               });
             });
         })
@@ -283,33 +289,51 @@ router.post("/addRating", verifyLogin, (req, res) => {
     .then(() => {
       res.json(true);
     })
-    .catch(() => {res.send("something went wrong")});
-});
-router.get("/category/:name",verifyLogin,(req,res)=>{
-  // console.log(req.params.name)
-  userHelper.getCategoryBook(req.params.name).then((data)=>{
-    res.render("user/home", {
-      name: req.session.user.username,
-      books: data,
+    .catch(() => {
+      res.send("something went wrong");
     });
-  }).catch((err)=>{
-
-  })
-})
+});
+router.get("/category/:name", verifyLogin, (req, res) => {
+  // console.log(req.params.name)
+  userHelper
+    .getCategoryBook(req.params.name)
+    .then((data) => {
+      res.render("user/home", {
+        name: req.session.user.username,
+        books: data,
+      });
+    })
+    .catch((err) => {});
+});
 //-------------------------------admin--------------------------------
-router.get("/admin",(req,res)=>{
-  res.render("admin/adminLogin")
-})
-router.post("/adminSignIn",(req,res)=>{
-  adminHelper.adminLogin(req.body).then(()=>{
-    res.render("admin/adminView")
-
-  }).catch((err)=>{
-  if(err){
-    res.render("admin/adminLogin",{passErr:true})
-  }else{
-    res.render("admin/adminLogin",{mailErr:true})
-  }
-  })
-})
+router.get("/admin", (req, res) => {
+  res.render("admin/adminLogin");
+});
+router.post("/adminSignIn", (req, res) => {
+  adminHelper
+    .adminLogin(req.body)
+    .then(() => {
+      userHelpers
+        .bookDataPicker()
+        .then((data) => {
+          adminHelper.getUserData().then((userData) => {
+            console.log(data,userData)
+            res.render("admin/adminView", {
+              users: userData,
+              books: data,
+            });
+          });
+        })
+        .catch((err) => {
+          res.send("some think went wrong");
+        });
+    })
+    .catch((err) => {
+      if (err) {
+        res.render("admin/adminLogin", { passErr: true });
+      } else {
+        res.render("admin/adminLogin", { mailErr: true });
+      }
+    });
+});
 module.exports = router;

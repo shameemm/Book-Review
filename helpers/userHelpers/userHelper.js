@@ -456,17 +456,17 @@ module.exports = {
   },
   getRating:(data)=>{
     return new Promise((resolve,reject)=>{
-      // console.log(data)
+      console.log(data)
       var sum=0;
       var len=data.rating.length
-      //  console.log(len)
+       console.log(len)
       for(var i=0;i<len;i++){
         sum=sum+data.rating[i].rate
         
       }
-      // console.log(sum)
+      console.log(sum)
       var ratingofthebook=sum/len
-      // console.log(ratingofthebook)
+      console.log(ratingofthebook)
       ratingofthebook=Number.parseFloat(ratingofthebook).toFixed(1);
       data.totalrating=ratingofthebook
       resolve(data)
