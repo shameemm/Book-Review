@@ -27,12 +27,12 @@
 <section id="home">
     <div class="sidenav">
     <a class="active">Categories</a>
-    <a href="/category/adventure">Adventure</a>
+    <a href="/category/Adventure">Adventure</a>
     <a href="/category/Art">Art</a>
     <a href="/category/Children’s">Children’s</a>
     <a href="/category/Contemparary">Contemparary</a>
     <a href="/category/Cooking">Cooking</a>
-    <a href="/category/Devolopment">Devolopment</a>
+    <a href="/category/Development">Development</a>
     <a href="/category/Dystopian">Dystopian</a>
     <a href="/category/Fantasy">Fantasy</a>
     <a href="/category/Families & Relationship">Families & Relationship</a>
@@ -40,7 +40,7 @@
     <a href="/category/Health">Health</a>
     <a href="/category/History">History</a>
     <a href="/category/Horror">Horror</a>
-    <a href="/category/Historical-Fiction">Historical-Fiction</a>
+    <a href="/category/Historical fiction">Historical-Fiction</a>
     <a href="/category/Humor">Humor</a>
     <a href="/category/Motivational">Motivational</a>
     <a href="/category/Mystery">Mystery</a>
@@ -48,10 +48,10 @@
     <a href="/category/Paranormal">Paranormal</a>
     <a href="/category/Personal">Personal</a>
     <a href="/category/Romance">Romance</a>
-    <a href="/category/Science-Fiction">Science-Fiction</a>
+    <a href="/category/Science Fiction">Science-Fiction</a>
     <a href="/category/Thriller">Thriller</a>
     <a href="/category/Travel">Travel</a>
-
+    <a href="/category/others"></a>
   </div>
     <div class="row justify-content-center" style="width: 100%;">
       <div class="col-xl-7 col-lg-9 text-center" style="z-index: 1;">
@@ -67,7 +67,7 @@
       {{#each books}}
       {{#each this}}
       {{#if this.ibnNumber}}
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-6">
         <div class="card-box mt-4">
           <img src="/cover-images/{{this._id}}.jpg" alt="err" style="width: 16rem; height:20rem" />
           <h4 class="title"><a href="/bookField/{{this._id}}">{{this.bookName}}</a></h4>

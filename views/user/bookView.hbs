@@ -64,11 +64,14 @@
               </svg>
 
       {{/if}}
-      
+        <p id="likes"><b>{{this.likeNumber}} Likes</b></p>      
+      <div class="col-md-1 ml-auto">
+        <a href="download/{{this._id}}" class="btn btn-danger"><i class="fas fa-download"></i></a>
+      </div>
       <div class="col">
       
  
-        <p id="likes"><b>{{this.likeNumber}} Prosons Liked This Book</b></p>
+
         {{!-- <form method="post" action="/addCommentToTheDb"> --}}
        
            <input type="hidden" id="bookId" name="bookId" value="{{this._id}}">
@@ -81,6 +84,7 @@
 
       {{/if}}
       {{/each}}
+    </div>
     </div>
     <div class="col">
       <div style="width: 300px; margin:auto">
